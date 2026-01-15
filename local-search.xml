@@ -4,11 +4,11 @@
   
   
   <entry>
-    <title>practice_handwriting_20260115</title>
-    <link href="/2026/01/15/practice-handwriting-20260115/"/>
-    <url>/2026/01/15/practice-handwriting-20260115/</url>
+    <title>今日练字：2026-01-15</title>
+    <link href="/2026/01/15/Practice_Handwriting_20260115/"/>
+    <url>/2026/01/15/Practice_Handwriting_20260115/</url>
     
-    <content type="html"><![CDATA[<p>今日份练字，偶尔拿出来写两笔<br><img src="/.com//handwriting.jpg" alt="练字"></p>]]></content>
+    <content type="html"><![CDATA[<p>今日份练字，偶尔拿出来写两笔<br><img src="/.com//handwriting.jpg" alt="今日练字" title="今日练字"></p>]]></content>
     
     
     <categories>
@@ -29,11 +29,11 @@
   
   
   <entry>
-    <title>English_20260115</title>
-    <link href="/2026/01/15/English-20260115/"/>
-    <url>/2026/01/15/English-20260115/</url>
+    <title>备考雅思：2026-01-15</title>
+    <link href="/2026/01/15/English_20260115/"/>
+    <url>/2026/01/15/English_20260115/</url>
     
-    <content type="html"><![CDATA[<p>今日英语学习依然在第一阶段：打基础+学习阅读技巧</p><ul><li>[] 单词过两遍</li><li>[] 语料库听写一遍</li><li>[] 阅读课过一遍</li></ul><h3 id="1-背单词"><a href="#1-背单词" class="headerlink" title="1.背单词"></a>1.背单词</h3><p>今日时间不够<br>复习单词15min 进度<br><img src="/.com//data.png" alt="今日数据"></p><h3 id="2-语料库"><a href="#2-语料库" class="headerlink" title="2.语料库"></a>2.语料库</h3><p>听15min 检查10min</p><p>chapter 11 section2</p><p>单词部分听完并学习了新的单词 明天复习</p>]]></content>
+    <content type="html"><![CDATA[<p>今日英语学习依然在第一阶段：打基础+学习阅读技巧</p><ul><li><input disabled type="checkbox"> 单词过两遍</li><li><input disabled type="checkbox"> 语料库听写一遍</li><li><input disabled type="checkbox"> 阅读课过一遍</li></ul><h3 id="1-背单词"><a href="#1-背单词" class="headerlink" title="1.背单词"></a>1.背单词</h3><p>今日时间不够<br>复习单词15min 进度</p><img src="/.com//01/15/English_20260115/data.png" class title="今日学习数据"><h3 id="2-语料库"><a href="#2-语料库" class="headerlink" title="2.语料库"></a>2.语料库</h3><p>听15min 检查10min</p><p>chapter 11 section2</p><p>单词部分听完并学习了新的单词 明天复习</p>]]></content>
     
     
     <categories>
@@ -55,8 +55,8 @@
   
   <entry>
     <title>hexo上传问题</title>
-    <link href="/2026/01/15/problem/"/>
-    <url>/2026/01/15/problem/</url>
+    <link href="/2026/01/15/Hexo_Upload_Problem/"/>
+    <url>/2026/01/15/Hexo_Upload_Problem/</url>
     
     <content type="html"><![CDATA[<p>解决了一个小问题：hexo上传的时候出现两个问题：</p><ol><li>只有标题没有内容</li><li>首页的tag里边显示是example&#x2F;&#x2F;&#x2F;</li></ol><p>因为在<code>_config.yml</code>还没有设定</p><figure class="highlight ldif"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ldif"><span class="hljs-comment"># URL</span><br><span class="hljs-comment">## Set your site url here. For example, if you use GitHub Page, set url as &#x27;https://username.github.io/project&#x27;</span><br><span class="hljs-attribute">url</span>: <br><span class="hljs-attribute">permalink</span>: <br></code></pre></td></tr></table></figure><p>改过来就可以了</p>]]></content>
     
@@ -80,8 +80,8 @@
   
   <entry>
     <title>今天我对番茄钟的一点重新认识</title>
-    <link href="/2026/01/15/knowledge-abou-Pomodoro-Techniquet/"/>
-    <url>/2026/01/15/knowledge-abou-Pomodoro-Techniquet/</url>
+    <link href="/2026/01/15/Knowledge_About_Pomodoro_Techniquet/"/>
+    <url>/2026/01/15/Knowledge_About_Pomodoro_Techniquet/</url>
     
     <content type="html"><![CDATA[<p>番茄钟（Pomodoro Technique）是由 Francesco Cirillo 在 1980 年代提出的一种时间管理方法：将工作划分为 25 分钟的专注时段（称为一个“番茄”），之后休息 5 分钟；每完成四个番茄，进行一次 15–30 分钟的长休息。其核心理念是通过「专注 + 休息」的循环，提升效率、减少分心、避免疲劳，尤其适合容易走神、希望培养专注力的人。</p><p>我一直用番茄钟训练自己的专注力，却始终没体验到公众号或营销号里描述的那种“神奇效果”。相反，我常常感到疲于奔命——像一头必须在限定时间内耕完地的老黄牛，鞭子还没到，就开始喘着粗气。越赶越急，任务反而更难完成。更糟的是，那 5 分钟的休息常常失控：一刷手机就停不下来，结果不仅没恢复精力，还进一步损耗了专注力。</p><p>我的典型模式是这样的：<br>“现在要写一段代码 → 设定 25 分钟 → 时间到，休息 5 分钟 → 任务没做完 → 再来一个番茄……”</p><p>直到今天读到一篇文章，我才恍然大悟：番茄钟真正的价值，或许不是“逼你专注”，而是一个“时间评估工具”。<br>它帮助你将有限的时间片，合理分配给不同的任务，从而看清自己一天的真实产出。</p><p>反思下来，我的问题其实出在两点：</p><ol><li><p>目标模糊，本末倒置<br>我总是“先有时间，后找任务”——盯着 25 分钟倒计时，却没想清楚“这 25 分钟到底要完成什么”。正确的做法应该是：先明确任务，再用番茄钟去分配时间。</p></li><li><p>忽视了番茄钟的“计量”功能<br>番茄钟的本质是“有效工作单位”。一天能完成多少个番茄，直接反映了你的真实高效时长。<br>比如，我可能“工作”了 8 小时，但有效番茄只有 4–5 个。这个数字让我看清：时间去哪儿了？哪些环节在浪费精力？如何优化节奏？</p></li></ol><p>番茄钟不是枷锁，而是镜子。<br>它照见的不是你的懒惰，而是你与时间的真实关系。</p><p>共勉。</p>]]></content>
     
