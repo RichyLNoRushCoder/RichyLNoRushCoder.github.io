@@ -4,13 +4,19 @@
   
   
   <entry>
-    <title>problem</title>
+    <title>hexo上传问题</title>
     <link href="/2026/01/15/problem/"/>
     <url>/2026/01/15/problem/</url>
     
-    <content type="html"><![CDATA[<p>解决了一个小问题：hexo上传的时候出现两个问题：</p><ol><li>只有标题没有内容</li><li>首页的tag里边显示是example&#x2F;&#x2F;&#x2F;</li></ol>]]></content>
+    <content type="html"><![CDATA[<p>解决了一个小问题：hexo上传的时候出现两个问题：</p><ol><li>只有标题没有内容</li><li>首页的tag里边显示是example&#x2F;&#x2F;&#x2F;</li></ol><p>因为在<code>_config.yml</code>还没有设定</p><figure class="highlight ldif"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs ldif"><span class="hljs-comment"># URL</span><br><span class="hljs-comment">## Set your site url here. For example, if you use GitHub Page, set url as &#x27;https://username.github.io/project&#x27;</span><br><span class="hljs-attribute">url</span>: <br><span class="hljs-attribute">permalink</span>: <br></code></pre></td></tr></table></figure><p>改过来就可以了</p>]]></content>
     
     
+    
+    <tags>
+      
+      <tag>problem</tag>
+      
+    </tags>
     
   </entry>
   
