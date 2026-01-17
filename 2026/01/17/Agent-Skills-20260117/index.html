@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://norushcoder.com/images/Knowledge/Agent/Agent_Skills/contrast.jpg">
 <meta property="og:image" content="https://norushcoder.com/images/Knowledge/Agent/Agent_Skills/skills_help_ai.jpg">
 <meta property="article:published_time" content="2026-01-17T06:17:46.000Z">
-<meta property="article:modified_time" content="2026-01-17T09:07:28.754Z">
+<meta property="article:modified_time" content="2026-01-17T09:15:41.013Z">
 <meta property="article:author" content="RichyLiu">
 <meta property="article:tag" content="Knowledge">
 <meta name="twitter:card" content="summary_large_image">
@@ -329,15 +329,15 @@
 <p><img src="/images/Knowledge/Agent/Agent_Skills/contrast.jpg" srcset="/img/loading.gif" lazyload alt="Agent Skills"></p>
 <h4 id="🛡️-第二层：技能主体"><a href="#🛡️-第二层：技能主体" class="headerlink" title="🛡️ 第二层：技能主体"></a>🛡️ 第二层：技能主体</h4><p>当智能体解析用户指令，发现匹配某个技能时，才会读取完整的 <code>skill.md</code> 文件，获得该技能完整的 MCP 调用接口。通过这种方式，Token 消耗量被大大压缩。</p>
 <h4 id="🛡️-第三层：附加资源-文件夹即技能"><a href="#🛡️-第三层：附加资源-文件夹即技能" class="headerlink" title="🛡️ 第三层：附加资源 (文件夹即技能)"></a>🛡️ 第三层：附加资源 (文件夹即技能)</h4><p>这是这套架构最强悍的地方：<strong>一个技能就是一个全功能的上下文包。</strong></p>
-<p>以**“毕业论文格式审查与润色”**技能为例，文件夹结构如下：</p>
+<p>以<strong>毕业论文格式审查与润色</strong>技能为例，文件夹结构如下：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">/skills/paper_polisher/<br>├── SKILL.md             # 核心元数据与激活逻辑<br>├── thesis_rules.json    # 复杂的学校排版规范<br>├── sample_bad_vs_good.md # 润色对照示例 (Few-shot)<br>├── check_format.py      # LaTeX 语法检测脚本<br>└── terminology.csv      # 领域专业词汇对照表<br><br></code></pre></td></tr></table></figure>
 
 <p>当用户提出需求时，系统会按需加载资源：加载 <code>thesis_rules.json</code> 获取法律依据，加载 <code>terminology.csv</code> 对齐专业术语，甚至运行 <code>check_format.py</code> 进行硬核检测。</p>
 <hr>
-<h3 id="3-Agent-Skills-的核心优势"><a href="#3-Agent-Skills-的核心优势" class="headerlink" title="3. Agent Skills 的核心优势"></a>3. Agent Skills 的核心优势</h3><h4 id="①-极高的语义精准度-Few-shot-Support"><a href="#①-极高的语义精准度-Few-shot-Support" class="headerlink" title="① 极高的语义精准度 (Few-shot Support)"></a>① 极高的语义精准度 (Few-shot Support)</h4><p>MCP 依赖 JSON 描述，适合定义类型，但不擅长描述“风格”。在 JSON 里强插示例会造成 Token 冗余。<br><strong>Skills 的优势</strong>：通过引用 <code>samples.md</code>，在干活时甩给 LLM 几个**“顶级范例”<strong>（Few-shot Prompting）。LLM 不再盲目猜测，而是有了</strong>“手感”**，输出质量从 70 分直奔 95 分。</p>
+<h3 id="3-Agent-Skills-的核心优势"><a href="#3-Agent-Skills-的核心优势" class="headerlink" title="3. Agent Skills 的核心优势"></a>3. Agent Skills 的核心优势</h3><h4 id="①-极高的语义精准度-Few-shot-Support"><a href="#①-极高的语义精准度-Few-shot-Support" class="headerlink" title="① 极高的语义精准度 (Few-shot Support)"></a>① 极高的语义精准度 (Few-shot Support)</h4><p>MCP 依赖 JSON 描述，适合定义类型，但不擅长描述“风格”。在 JSON 里强插示例会造成 Token 冗余。<br><strong>Skills 的优势</strong>：通过引用 <code>samples.md</code>，在干活时甩给 LLM 几个<strong>顶级范例</strong>（Few-shot Prompting）。LLM 不再盲目猜测，而是有了<strong>手感</strong>，输出质量从 70 分直奔 95 分。</p>
 <h4 id="②-跨语言的工具集成-Hybrid-Execution"><a href="#②-跨语言的工具集成-Hybrid-Execution" class="headerlink" title="② 跨语言的工具集成 (Hybrid Execution)"></a>② 跨语言的工具集成 (Hybrid Execution)</h4><p>文件夹可以携带 Python 或脚本。对于规则极强的任务（如公式闭合检查），脚本比 LLM 更快更准。技能可以先跑脚本，再让 LLM 总结。</p>
 <p><img src="/images/Knowledge/Agent/Agent_Skills/skills_help_ai.jpg" srcset="/img/loading.gif" lazyload alt="Agent Skills"></p>
-<h4 id="③-私有化与版本隔离"><a href="#③-私有化与版本隔离" class="headerlink" title="③ 私有化与版本隔离"></a>③ 私有化与版本隔离</h4><p>每个文件夹独立。你可以为“毕业论文”和“雅思备考”各做一个包，引用不同词库，互不干扰，像插拔式硬盘一样方便。</p>
+<h4 id="③-私有化与版本隔离"><a href="#③-私有化与版本隔离" class="headerlink" title="③ 私有化与版本隔离"></a>③ 私有化与版本隔离</h4><p>每个文件夹独立。你可以为不通的技能各做一个包，引用不同词库，互不干扰，像插拔式硬盘一样方便。</p>
 <h4 id="④-动态上下文管理-Smart-Context-Loading"><a href="#④-动态上下文管理-Smart-Context-Loading" class="headerlink" title="④ 动态上下文管理 (Smart Context Loading)"></a>④ 动态上下文管理 (Smart Context Loading)</h4><p>系统根据需求只加载文件夹里的某一个文件。相比 MCP 的全量不可拆分，Skills 能进一步节省每一轮对话的成本。</p>
 <hr>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>Agent Skills 通过<strong>渐进式披露 + 技能相关文件打包</strong>的方式，实现了 Agent 的按需加载，解决了 MCP 在复杂场景下的知识匮乏与上下文冗余问题。</p>
