@@ -19,23 +19,24 @@
   <meta name="author" content="RichyLiu">
   <meta name="keywords" content="">
   
-    <meta name="description" content="1. 一句话说明：期权买方：花钱购买未来以固定价格买某样东西的权利 卖房：拿钱，但是必须在未来把某样资产以固定价格卖给买方 2. 举个例子：现在股票A是100元一股，你有1000元，你如果直接买的话，只能买10股，假设未来三个月股票涨到150元，一共赚了$50*10&#x3D;500$元。 如果用期权，假设一股的权利金是10元，你可以购买100股的期权。这个期权决定了，在未来三个月，你可以用110">
+    <meta name="description" content="今天我们来聊一聊：“好的数据”对于 LLM 到底有什么用？ 大家都知道数据是大模型的基础，质量决定效果。但随着 AI 卷得越来越厉害，算法同学的作用似乎越来越大，反观我们做数据的，作用好像慢慢被弱化了。 现在的痛点很真实：Java&#x2F;SQL 写不过 AI，业务理解干不过数分。那我们数据人还能干什么呢？ 其实 AI 跑得再快，现在也慢慢碰到“数据天花板”了。很多企业现在的瓶颈不再是“算力不够">
 <meta property="og:type" content="article">
-<meta property="og:title" content="简单了解期权">
-<meta property="og:url" content="https://norushcoder.com/2026/01/20/finance-20260120/index.html">
+<meta property="og:title" content="好的数据对于 LLM 有什么用？——从“数据搬运工”到“库内推理”的范式转移">
+<meta property="og:url" content="https://norushcoder.com/2026/01/23/good-data-for-llm/index.html">
 <meta property="og:site_name" content="NoRushCoder">
-<meta property="og:description" content="1. 一句话说明：期权买方：花钱购买未来以固定价格买某样东西的权利 卖房：拿钱，但是必须在未来把某样资产以固定价格卖给买方 2. 举个例子：现在股票A是100元一股，你有1000元，你如果直接买的话，只能买10股，假设未来三个月股票涨到150元，一共赚了$50*10&#x3D;500$元。 如果用期权，假设一股的权利金是10元，你可以购买100股的期权。这个期权决定了，在未来三个月，你可以用110">
+<meta property="og:description" content="今天我们来聊一聊：“好的数据”对于 LLM 到底有什么用？ 大家都知道数据是大模型的基础，质量决定效果。但随着 AI 卷得越来越厉害，算法同学的作用似乎越来越大，反观我们做数据的，作用好像慢慢被弱化了。 现在的痛点很真实：Java&#x2F;SQL 写不过 AI，业务理解干不过数分。那我们数据人还能干什么呢？ 其实 AI 跑得再快，现在也慢慢碰到“数据天花板”了。很多企业现在的瓶颈不再是“算力不够">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2026-01-20T12:07:18.000Z">
-<meta property="article:modified_time" content="2026-01-20T13:03:00.607Z">
+<meta property="article:published_time" content="2026-01-23T01:42:21.000Z">
+<meta property="article:modified_time" content="2026-01-23T06:46:40.965Z">
 <meta property="article:author" content="RichyLiu">
-<meta property="article:tag" content="Finance">
-<meta property="article:tag" content="Knowledge">
+<meta property="article:tag" content="Agent">
+<meta property="article:tag" content="Data">
+<meta property="article:tag" content="LLM">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>简单了解期权 - NoRushCoder</title>
+  <title>好的数据对于 LLM 有什么用？——从“数据搬运工”到“库内推理”的范式转移 - NoRushCoder</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -214,7 +215,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="简单了解期权"></span>
+            <span id="subtitle" data-typed-text="好的数据对于 LLM 有什么用？——从“数据搬运工”到“库内推理”的范式转移"></span>
           
         </div>
 
@@ -225,8 +226,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2026-01-20 20:07" pubdate>
-          2026年1月20日 晚上
+        <time datetime="2026-01-23 09:42" pubdate>
+          2026年1月23日 上午
         </time>
       </span>
     
@@ -237,7 +238,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          802 字
+          1.2k 字
         
       </span>
     
@@ -248,7 +249,7 @@
         
         
         
-          7 分钟
+          11 分钟
         
       </span>
     
@@ -294,21 +295,51 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">简单了解期权</h1>
+            <h1 id="seo-header">好的数据对于 LLM 有什么用？——从“数据搬运工”到“库内推理”的范式转移</h1>
             
             
               <div class="markdown-body">
                 
-                <h3 id="1-一句话说明：期权"><a href="#1-一句话说明：期权" class="headerlink" title="1. 一句话说明：期权"></a>1. 一句话说明：期权</h3><p>买方：花钱购买未来以固定价格买某样东西的权利</p>
-<p>卖房：拿钱，但是必须在未来把某样资产以固定价格卖给买方</p>
-<h3 id="2-举个例子："><a href="#2-举个例子：" class="headerlink" title="2. 举个例子："></a>2. 举个例子：</h3><p>现在股票A是100元一股，你有1000元，你如果直接买的话，只能买10股，假设未来三个月股票涨到150元，一共赚了$50*10&#x3D;500$元。</p>
-<p>如果用期权，假设一股的权利金是10元，你可以购买100股的期权。<br>这个期权决定了，在未来三个月，你可以用110元购买股票。<br>你还有资金11000元，你可以用这11000元购买110股股票，假设股票涨到150元，一共赚了$（50-10）<em>100&#x3D;4000$元。<br>如果你没有其他资金，你也可以把这个期权卖出，期权现在的价格在40左右波动（别人买了这个期权，一股最少能省40，未来还可能更多），你可以$40</em>100&#x3D;4000$赚，净赚3000元。</p>
-<h3 id="3-两个简单的期权模式："><a href="#3-两个简单的期权模式：" class="headerlink" title="3. 两个简单的期权模式："></a>3. 两个简单的期权模式：</h3><ol>
-<li><p>看跌期权<br>期权有一个很神奇的地方，就是你可以卖出你没有的东西。<br>比如看跌期权。<br>假设你有9000元现金，股票A现在100元。你可以一股10元卖出自己的看跌期权，卖100股，担保：<br>在未来某个时间点，股票A价格不管跌到多少，我都以90元的价格购买。你承担了接盘的风险。<br>如果股票A的价格涨了，和你交易的人觉得卖给你亏了，那你赚了保证金1000元。<br>假设股票A的价格降到了85，你依然得以90元一股购买股票，你花9000元，获得了<em>85</em>100+1000&#x3D;9500元*。还是赚了500元。<br>但是跌的更低，可就亏了。</p>
-</li>
-<li><p>看涨期权<br>看涨期权和看跌期权是相反的。<br>如果你手里已经持有了一些股票（比如你打算长期持有的公司），你可以每个月给它们“收租”。每个月卖出一份远高于当前市价的看涨期权（Call）。只要股票没在短期内暴涨，你就白赚一份权利金。如果真的暴涨了，你就按高价把股票卖掉，反正你也赚了。这能极大地对冲你持股时的心理波动，在震荡市中，这部分“租金”往往能贡献 5%-10% 的额外年化收益。<br>想象一下，你是个硬件发烧友。英伟达发布了一款新显卡，现在市价 1000元。你手里暂时没钱，但你觉得三个月后因为 AI 爆发，这卡肯定会涨到 2000 元。你付给店老板 50元 签了一份合同：“三个月后的今天，我有权按 1000 元的价格从你这买一张显卡。”<br>如果大涨到 2000 元：你拿合同找老板，老板必须按 1000 元卖给你。你转手一卖，扣掉 50 元合同费，净赚 950 元！<br>如果没涨（甚至跌了）：你发现市场上这显卡只要 800 元了。你肯定不会按 1000 元买，你直接撕毁合同，损失就是那 50元 的合同费。</p>
-</li>
+                <p>今天我们来聊一聊：“好的数据”对于 LLM 到底有什么用？</p>
+<p>大家都知道数据是大模型的基础，质量决定效果。但随着 AI 卷得越来越厉害，算法同学的作用似乎越来越大，反观我们做数据的，作用好像慢慢被弱化了。</p>
+<p>现在的痛点很真实：Java&#x2F;SQL 写不过 AI，业务理解干不过数分。<strong>那我们数据人还能干什么呢？</strong></p>
+<p>其实 AI 跑得再快，现在也慢慢碰到“数据天花板”了。很多企业现在的瓶颈不再是“算力不够”，而是“数据供不上”。</p>
+<h3 id="1-现有的-Data-for-AI-到底出了什么问题？"><a href="#1-现有的-Data-for-AI-到底出了什么问题？" class="headerlink" title="1. 现有的 Data for AI 到底出了什么问题？"></a>1. 现有的 Data for AI 到底出了什么问题？</h3><p>看上去企业数据资产不少，但真正能直接拿来训练、推理的比例并不高，主要是因为这几个坑：</p>
+<ol>
+<li><strong>数据类型对不上</strong>：现在企业大部分数据是二维表格，适合做报表。但模型更需要向量（表达语义）、图结构（表达关系）、时间序列（表达变化）。<strong>本质上，现有数据的组织方式和模型的需求“不兼容”。</strong></li>
+<li><strong>维度不够</strong>：传统指标讲究“少而精”，字段得能解释。但模型往往靠大量稠密特征，很多特征单看没意义，组合起来才是宝。</li>
+<li><strong>时效性太差</strong>：传统数据按天、按周更新，复盘够了，但推荐、风控这种实时决策，模型需要的是“现在”的数据，而不是“昨天”的。</li>
+<li><strong>工具没用好</strong>：数据圈有很多成熟的实时处理、任务调度工具，但现在还没跟 AI 流程很好地合体。</li>
 </ol>
+<h3 id="2-具体的解决方案"><a href="#2-具体的解决方案" class="headerlink" title="2. 具体的解决方案"></a>2. 具体的解决方案</h3><p><strong>第一，从存储角度：</strong><br>得搞<strong>湖仓一体</strong>。在能存下多模态数据（图片、文档等）的基础上，增加快速调用的功能，别让数据躺在里面睡觉。</p>
+<p><strong>第二，从推理角度：</strong></p>
+<p>现在的方案太长：</p>
+<blockquote>
+<p><strong>数据库读 Page → 序列化发网络包 → 应用层反序列化 → 转为 Tensor → 最后才交给 GPU。</strong></p>
+</blockquote>
+<p>这就好比你在书架上找一本书，为了读它，你得先复印一份，装进快递盒寄回家，拆开后再翻译成母语，最后才开始读。</p>
+<p><strong>我们更希望的是：</strong></p>
+<ul>
+<li><strong>零拷贝（Zero-Copy）思想</strong>：数据在数据库内存（Buffer Pool）里刚解开，别封装了，原地直接通过内置算子变向量。</li>
+<li><strong>内存直接交付</strong>：Embedding 后的张量（Tensor）通过内存地址指针，直接甩给旁路挂载的推理引擎。</li>
+</ul>
+<p><strong>核心就是把计算向存储前移，能少搬数据就少搬。</strong></p>
+<h3 id="3-我们可以利用哪些数据库的“老本行”优势？"><a href="#3-我们可以利用哪些数据库的“老本行”优势？" class="headerlink" title="3. 我们可以利用哪些数据库的“老本行”优势？"></a>3. 我们可以利用哪些数据库的“老本行”优势？</h3><ol>
+<li><strong>索引能力</strong><br>做数据的都知道，索引能救命。如果没有索引，匹配问题就得全量扫描。<br><strong>举个例子：</strong> 如果提示词（Prompt）太长，模型每次都要重复计算 KV 矩阵，开销极大。但如果我们把这些值存入磁盘&#x2F;内存，并建立索引，下次就能直接命中之前的推理状态，从中间状态直接开跑。</li>
+<li><strong>并行调度能力</strong><br>虽然并行是 GPU 的强项，但 GPU 必须从内存拉数据，搬运时间太长。数据库可以直接在内存里并行计算。而且如果把计算都看作“算子”，就能利用数据库成熟的任务调度和优先级管理，谁先跑谁后跑，管得明明白白。</li>
+<li><strong>数据一致性（ACID）</strong><br>这是数据库的拿手好戏。如果直接在库内读向量做推理，只要数据库里的数据一变，模型拿到的结果立刻跟着变，业务响应极快，不用担心模型读到的是旧数据。</li>
+<li><strong>硬约束（纠正幻觉）</strong><br>利用<strong>强 Schema 和约束</strong>。比如通过内置的图数据库算子，给推理加个“紧箍咒”。<br><strong>例子：</strong> 模型想推理“A 公司的 CEO 是谁”，向量检索可能搜到一堆八卦，但数据库会先查内部的关系图谱（确定的事实），如果是 B，就强制模型按这个输出。<strong>用“确定性”去纠正 AI 的“概率性”。</strong></li>
+</ol>
+<hr>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>以后我们得解决这几个关键问题：</p>
+<ol>
+<li>怎么利用索引快速定位有效数据？</li>
+<li>怎么利用数据库的大规模计算和贴近内存的特点，给训练和存储加速？</li>
+<li>怎么利用事务能力，保证模型快速响应业务？</li>
+<li>怎么利用数据库的“确定性”去纠偏？</li>
+</ol>
+<p>作为数据人的一份子，我很希望看到 AI 消费数据、理解数据，而数据反过来塑造 AI。</p>
+<p><strong>不过说真的，如果这些都实现了，数据人是不是真的得去找新工作了？</strong></p>
 
                 
               </div>
@@ -327,12 +358,12 @@
     
       <span class="category-chain">
         
-  <a href="/categories/Knowledge/" class="category-chain-item">Knowledge</a>
+  <a href="/categories/knowledge/" class="category-chain-item">knowledge</a>
   
   
     <span>></span>
     
-  <a href="/categories/Knowledge/Finance/" class="category-chain-item">Finance</a>
+  <a href="/categories/knowledge/Data-for-AI/" class="category-chain-item">Data for AI</a>
   
   
 
@@ -349,9 +380,11 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/Knowledge/" class="print-no-link">#Knowledge</a>
+        <a href="/tags/Agent/" class="print-no-link">#Agent</a>
       
-        <a href="/tags/Finance/" class="print-no-link">#Finance</a>
+        <a href="/tags/LLM/" class="print-no-link">#LLM</a>
+      
+        <a href="/tags/Data/" class="print-no-link">#Data</a>
       
     </div>
   
@@ -363,8 +396,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>简单了解期权</div>
-      <div>https://norushcoder.com/2026/01/20/finance-20260120/</div>
+      <div>好的数据对于 LLM 有什么用？——从“数据搬运工”到“库内推理”的范式转移</div>
+      <div>https://norushcoder.com/2026/01/23/good-data-for-llm/</div>
     </div>
     <div class="license-meta">
       
@@ -376,7 +409,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2026年1月20日</div>
+          <div>2026年1月23日</div>
         </div>
       
       
@@ -408,18 +441,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2026/01/23/good-data-for-llm/" title="好的数据对于 LLM 有什么用？——从“数据搬运工”到“库内推理”的范式转移">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">好的数据对于 LLM 有什么用？——从“数据搬运工”到“库内推理”的范式转移</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2026/01/20/English-20260120/" title="备考雅思:2026-01-20">
-                        <span class="hidden-mobile">备考雅思:2026-01-20</span>
+                      <a href="/2026/01/20/finance-20260120/" title="简单了解期权">
+                        <span class="hidden-mobile">简单了解期权</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
