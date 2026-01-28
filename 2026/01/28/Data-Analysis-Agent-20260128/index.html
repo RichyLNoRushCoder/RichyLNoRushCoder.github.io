@@ -27,7 +27,7 @@
 <meta property="og:description" content="1. 什么是 Vanna.ai？Vanna.ai 是一个基于 LLM 的数据查询工具，可以快速查询数据库，并生成 SQL 查询语句。它的核心是基于 LLM 的数据查询工具，可以快速查询数据库，并生成 SQL 查询语句。它的优势在于，可以将表结构、已经有过的查询语句、文档等等存在一个向量式数据库。等到用户查询的时候，根据用户的查询语句，从数据库中提取出相关的信息，拼入 prompt 中交给 LLM,">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-01-28T03:13:12.000Z">
-<meta property="article:modified_time" content="2026-01-28T08:55:56.170Z">
+<meta property="article:modified_time" content="2026-01-28T08:59:42.800Z">
 <meta property="article:author" content="RichyLiu">
 <meta property="article:tag" content="Agent">
 <meta property="article:tag" content="Data">
@@ -238,7 +238,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k 字
+          1.5k 字
         
       </span>
     
@@ -249,7 +249,7 @@
         
         
         
-          12 分钟
+          13 分钟
         
       </span>
     
@@ -329,7 +329,8 @@
 </ol>
 <p>整体来说Vanna 的核心是一个闭环系统。它通过检索增强（RAG）解决了 LLM 对私有数据库结构的‘信息缺位’问题。在执行端，它通过本地连接器（Runner）确保了数据不外流；在学习端，它通过向量数据库沉淀‘正确 SQL 经验’，实现越用越聪明的良性循环。</p>
 <p>大家在做 NL2SQL 时，是倾向于把所有表结构丢给 LLM，还是通过语义检索只给它最相关的 5 张表？欢迎评论区交流。</p>
-<p>作为一名大数据开发，我深知“懂业务”与“写代码”之间的鸿沟。Vanna.ai 的出现，不仅仅是省去了重复写 SQL 的时间，更是迈向“数据平民化”的重要一步。<br>目前我正致力于 NL2SQL 的企业级落地实践，探索如何在大规模生产环境中处理动态脱敏、SQL 自愈以及海量元数据的检索优化等硬核问题。<br>如果你也对 Data + AI 的交叉领域感兴趣，欢迎关注我的博客 <a target="_blank" rel="noopener" href="https://www.norushcoder.com/">NoRushCoder.com</a>。后续我会持续分享相关的架构思考与技术沉淀，在这个 AI 浪潮奔涌的时代，我们一起“不疾不徐，稳步前行”。</p>
+<p>作为一名大数据开发，我深知“懂业务”与“写代码”之间的鸿沟。Vanna.ai 的出现，不仅仅是省去了重复写 SQL 的时间，更是迈向“数据平民化”的重要一步。</p>
+<p>目前我正致力于 NL2SQL 与 Data Agent 的企业级落地。在真实的大数据场景下，要让 AI 真正做到“指哪打哪”，需要一套严密的架构体系。后续我将在博客中持续分享相关的知识沉淀与实战经验，包括深度 RAG 架构优化、SQL 的“自愈”机制 (Self-Correction)、数据安全与动态脱敏、海量元数据的“精排”策略等。<br>如果你也对 Data + AI 的交叉领域感兴趣，欢迎关注程序员不急 <a target="_blank" rel="noopener" href="https://www.norushcoder.com/">NoRushCoder.com</a>。后续我会持续分享相关的架构思考与技术沉淀，在这个 AI 浪潮奔涌的时代，我们一起“不疾不徐，稳步前行”。</p>
 
                 
               </div>
