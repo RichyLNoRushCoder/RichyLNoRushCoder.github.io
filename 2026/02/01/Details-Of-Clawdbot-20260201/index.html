@@ -1,0 +1,965 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/image/myico.ico">
+  <link rel="icon" href="/image/myico.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="RichyLiu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="Clawdbot 架构全解：一个“永远在线”的 Agent 系统是如何工作的如果你想部署或体验 Clawdbot，可以先参考我的博客：👉 GitHub 两周 100k Star：聊聊最近火出圈的 Moltbot (原 Clawdbot) 这篇文章不讲安装命令，而是从系统设计和工程实现的角度，完整拆解 Clawdbot 是如何构建一个「多 Agent、跨设备、具备长期记忆和主动行为能力」的 AI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2026 开年王炸：从 Clawdbot 到 Moltbot，真正的个人 AI 时代来了？(技术细节)">
+<meta property="og:url" content="https://norushcoder.com/2026/02/01/Details-Of-Clawdbot-20260201/index.html">
+<meta property="og:site_name" content="NoRushCoder">
+<meta property="og:description" content="Clawdbot 架构全解：一个“永远在线”的 Agent 系统是如何工作的如果你想部署或体验 Clawdbot，可以先参考我的博客：👉 GitHub 两周 100k Star：聊聊最近火出圈的 Moltbot (原 Clawdbot) 这篇文章不讲安装命令，而是从系统设计和工程实现的角度，完整拆解 Clawdbot 是如何构建一个「多 Agent、跨设备、具备长期记忆和主动行为能力」的 AI">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-02-01T08:41:24.000Z">
+<meta property="article:modified_time" content="2026-02-01T14:01:33.634Z">
+<meta property="article:author" content="RichyLiu">
+<meta property="article:tag" content="Agent">
+<meta property="article:tag" content="Data">
+<meta property="article:tag" content="Knowledge">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="数据人快速学 AI">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>2026 开年王炸：从 Clawdbot 到 Moltbot，真正的个人 AI 时代来了？(技术细节) - NoRushCoder</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"norushcoder.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"qiD7FevHp6LALNsUCu4X1Vat-gzGzoHsz","app_key":"V7r8vUp1yx4wbqU2QZ8h5KUF","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>NoRushCoder</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="2026 开年王炸：从 Clawdbot 到 Moltbot，真正的个人 AI 时代来了？(技术细节)"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-02-01 16:41" pubdate>
+          2026年2月1日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          14 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> times
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">2026 开年王炸：从 Clawdbot 到 Moltbot，真正的个人 AI 时代来了？(技术细节)</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h1 id="Clawdbot-架构全解：一个“永远在线”的-Agent-系统是如何工作的"><a href="#Clawdbot-架构全解：一个“永远在线”的-Agent-系统是如何工作的" class="headerlink" title="Clawdbot 架构全解：一个“永远在线”的 Agent 系统是如何工作的"></a>Clawdbot 架构全解：一个“永远在线”的 Agent 系统是如何工作的</h1><p>如果你想部署或体验 Clawdbot，可以先参考我的博客：<br>👉 <a target="_blank" rel="noopener" href="https://github.com/openclaw/openclaw">GitHub 两周 100k Star：聊聊最近火出圈的 Moltbot (原 Clawdbot)</a></p>
+<p>这篇文章不讲安装命令，而是从<strong>系统设计和工程实现</strong>的角度，完整拆解 Clawdbot 是如何构建一个「多 Agent、跨设备、具备长期记忆和主动行为能力」的 AI 系统的。</p>
+<hr>
+<h2 id="一、整体架构：Clawdbot-的五大核心组件"><a href="#一、整体架构：Clawdbot-的五大核心组件" class="headerlink" title="一、整体架构：Clawdbot 的五大核心组件"></a>一、整体架构：Clawdbot 的五大核心组件</h2><p>Clawdbot 采用了一个非常清晰的分层架构：</p>
+<ul>
+<li><strong>Gateway（中控调度）</strong></li>
+<li><strong>Agent（智能体）</strong></li>
+<li><strong>Skills（技能 &#x2F; 工具箱）</strong></li>
+<li><strong>Channels（消息通道）</strong></li>
+<li><strong>Nodes（终端 &#x2F; 传感器）</strong></li>
+</ul>
+<p>这种设计的核心目标只有三个词：<strong>可扩展、可组合、可控</strong>。</p>
+<h3 id="1-Gateway：真正的“中控大脑”"><a href="#1-Gateway：真正的“中控大脑”" class="headerlink" title="1. Gateway：真正的“中控大脑”"></a>1. Gateway：真正的“中控大脑”</h3><p>在 OpenClaw（早期也叫 Moltbot）的设计中，Gateway 并不是一个简单的 API Server，而是整个系统的<strong>控制平面</strong>。</p>
+<p>它主要负责三件事：</p>
+<ul>
+<li><p><strong>会话管理</strong><br>创建和维护 Session ID，管理上下文、生命周期和消息归属。</p>
+</li>
+<li><p><strong>请求路由</strong><br>OpenClaw 是一个多 Agent、多 Channel 的系统。<br>Gateway 决定：</p>
+<ul>
+<li>消息从哪个 Channel 进来</li>
+<li>应该交给哪个 Agent</li>
+<li>是否需要多个 Agent 协作</li>
+</ul>
+</li>
+<li><p><strong>安全与权限控制</strong><br>包括：</p>
+<ul>
+<li>本地 &#x2F; 远程请求隔离</li>
+<li>API 权限管理</li>
+<li>通道白名单</li>
+<li>远程连接的安全边界</li>
+</ul>
+</li>
+</ul>
+<p>你可以把 Gateway 理解成一个 <strong>“带状态、懂业务的智能路由器”</strong>。</p>
+<hr>
+<h3 id="2-Agent：真正干活的人"><a href="#2-Agent：真正干活的人" class="headerlink" title="2. Agent：真正干活的人"></a>2. Agent：真正干活的人</h3><p>Agent 是执行任务的主体，每个 Agent 都是一个完整的 <strong>思考–行动循环（Agent Loop）</strong>。</p>
+<p>典型流程只有四步：</p>
+<ol>
+<li>上下文组装</li>
+<li>模型推理</li>
+<li>工具（Skill）调用</li>
+<li>结果分发</li>
+</ol>
+<p>Clawdbot 支持 <strong>多 Agent 并行</strong>：</p>
+<ul>
+<li>可以彼此完全隔离</li>
+<li>也可以通过 Gateway 协作</li>
+</ul>
+<p>每个 Agent 都有自己的工作区、配置和记忆文件，互不污染。</p>
+<h4 id="Pi-Agent：一个极其克制的“编程智能体”"><a href="#Pi-Agent：一个极其克制的“编程智能体”" class="headerlink" title="Pi Agent：一个极其克制的“编程智能体”"></a>Pi Agent：一个极其克制的“编程智能体”</h4><p>Clawdbot 里最有意思的是 <strong>Pi Agent</strong>。</p>
+<p>它不是靠“全能 Prompt”，而是通过<strong>极小、极严谨的工具集合</strong>，被塑造成一个非常可靠的编程与系统操作智能体。</p>
+<p>核心工具只有 4 个：</p>
+<ul>
+<li><code>bash</code>：执行 shell 命令</li>
+<li><code>read</code>：读取文件</li>
+<li><code>write</code>：写文件</li>
+<li><code>edit</code>：编辑文件</li>
+</ul>
+<p>工具越少，<strong>行为越可预测</strong>。<br>这是 Clawdbot 在工程层面非常成熟的一点。</p>
+<hr>
+<h3 id="3-Skills：能力的渐进式封装"><a href="#3-Skills：能力的渐进式封装" class="headerlink" title="3. Skills：能力的渐进式封装"></a>3. Skills：能力的渐进式封装</h3><p>Skills 是 Agent 能“做什么”的说明书。</p>
+<p>在 OpenClaw 中，Skills 遵循 <strong>AgentSkills 规范</strong>（Anthropic 提出的开放标准），目前已经被：</p>
+<ul>
+<li>Claude Code</li>
+<li>Cursor</li>
+<li>VS Code</li>
+<li>OpenAI Codex</li>
+<li>Gemini CLI</li>
+<li>GitHub Copilot</li>
+</ul>
+<p>等大量工具采用。</p>
+<p>Skill 本质上是：</p>
+<ul>
+<li>用 Markdown + 脚本描述能力</li>
+<li>按需加载</li>
+<li>渐进式暴露模型能力</li>
+</ul>
+<p>这样做的直接收益是：</p>
+<ul>
+<li><strong>更低的 Token 消耗</strong></li>
+<li><strong>更稳定的推理路径</strong></li>
+</ul>
+<p>更详细的分析我在另一篇博客里写过：<br>👉 <a href="https://norushcoder.com/2026/01/17/Agent-Skills-20260117/">Agent Skills：大模型能力的渐进式封装与按需加载</a></p>
+<hr>
+<h3 id="4-Channels：多平台消息集成"><a href="#4-Channels：多平台消息集成" class="headerlink" title="4. Channels：多平台消息集成"></a>4. Channels：多平台消息集成</h3><p>Channels 的职责很单一：<br><strong>把各种消息平台接到 Gateway 上，并做协议&#x2F;格式翻译。</strong></p>
+<p>目前支持的典型渠道包括：</p>
+<table>
+<thead>
+<tr>
+<th>平台</th>
+<th>协议 &#x2F; 库</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>WhatsApp</td>
+<td>Baileys</td>
+<td>QR 登录、媒体支持</td>
+</tr>
+<tr>
+<td>Telegram</td>
+<td>grammY</td>
+<td>流式、Webhook</td>
+</tr>
+<tr>
+<td>Discord</td>
+<td>discord.js</td>
+<td>原生命令</td>
+</tr>
+<tr>
+<td>Slack</td>
+<td>Bolt</td>
+<td>DM 策略、频道白名单</td>
+</tr>
+<tr>
+<td>Signal</td>
+<td>signal-cli</td>
+<td>本地运行</td>
+</tr>
+<tr>
+<td>iMessage</td>
+<td>imsg CLI</td>
+<td>仅 macOS</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>由于微信没有公开 API，目前暂不支持。未来可能会支持飞书或钉钉。</p>
+</blockquote>
+<p><strong>WhatsApp 示例配置：</strong></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;channels&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;whatsapp&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;allowFrom&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;+15555550123&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;groups&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span> <span class="hljs-attr">&quot;*&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span> <span class="hljs-attr">&quot;requireMention&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span> <span class="hljs-punctuation">&#125;</span> <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;messages&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;groupChat&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span> <span class="hljs-attr">&quot;mentionPatterns&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;@clawd&quot;</span><span class="hljs-punctuation">]</span> <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="5-Nodes：远程大脑，本地双手"><a href="#5-Nodes：远程大脑，本地双手" class="headerlink" title="5. Nodes：远程大脑，本地双手"></a>5. Nodes：远程大脑，本地双手</h3><p>Nodes 是 Clawdbot 最容易被低估、但极其强大的部分。</p>
+<p>它允许你把：</p>
+<ul>
+<li>旧手机</li>
+<li>闲置电脑</li>
+<li>树莓派</li>
+</ul>
+<p>接入整个 Agent 网络，作为<strong>能力节点</strong>。</p>
+<h4 id="Node-能提供什么？"><a href="#Node-能提供什么？" class="headerlink" title="Node 能提供什么？"></a>Node 能提供什么？</h4><table>
+<thead>
+<tr>
+<th>平台</th>
+<th>能力</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>iOS</td>
+<td>摄像头、语音唤醒、屏幕录制</td>
+</tr>
+<tr>
+<td>Android</td>
+<td>摄像头、短信、语音</td>
+</tr>
+<tr>
+<td>macOS</td>
+<td>system.run、通知、摄像头</td>
+</tr>
+</tbody></table>
+<p>通信方式：</p>
+<ul>
+<li>Gateway WebSocket</li>
+<li>LAN &#x2F; Tailscale &#x2F; SSH 隧道</li>
+</ul>
+<p>这实现了一个非常优雅的架构：</p>
+<blockquote>
+<p><strong>Gateway 在云端运行，操作在设备本地执行</strong></p>
+</blockquote>
+<hr>
+<h2 id="二、Gateway-的通信协议：为什么它“像活的一样”"><a href="#二、Gateway-的通信协议：为什么它“像活的一样”" class="headerlink" title="二、Gateway 的通信协议：为什么它“像活的一样”"></a>二、Gateway 的通信协议：为什么它“像活的一样”</h2><h3 id="1-为什么选-WebSocket？"><a href="#1-为什么选-WebSocket？" class="headerlink" title="1. 为什么选 WebSocket？"></a>1. 为什么选 WebSocket？</h3><p>Moltbot 的控制平面彻底放弃了 HTTP 轮询，转而使用 WebSocket。</p>
+<p>原因很简单：</p>
+<ul>
+<li>双向</li>
+<li>低延迟</li>
+<li>长连接</li>
+</ul>
+<p>而且协议有一个<strong>硬性规则</strong>：</p>
+<blockquote>
+<p><strong>第一帧必须是 <code>connect</code></strong></p>
+</blockquote>
+<p>如果客户端没在第一时间“对暗号”，服务器直接断开连接。<br>这是非常典型的防御式设计。</p>
+<hr>
+<h3 id="2-请求-响应（RPC）"><a href="#2-请求-响应（RPC）" class="headerlink" title="2. 请求 &#x2F; 响应（RPC）"></a>2. 请求 &#x2F; 响应（RPC）</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;req&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;id&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;method&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;params&quot;</span> <span class="hljs-punctuation">&#125;</span><br><span class="hljs-punctuation">&#123;</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;res&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;id&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;ok&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;payload | error&quot;</span> <span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<p>这里的关键是 <code>id</code>。</p>
+<p>WebSocket 是并行的，多个请求同时在路上，<code>id</code> 就是 <strong>TraceID &#x2F; Correlation ID</strong>，用来保证前后对应。</p>
+<hr>
+<h3 id="3-事件驱动（Pub-Sub）"><a href="#3-事件驱动（Pub-Sub）" class="headerlink" title="3. 事件驱动（Pub&#x2F;Sub）"></a>3. 事件驱动（Pub&#x2F;Sub）</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span> <span class="hljs-attr">&quot;type&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;event&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;event&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;payload&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;seq?&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;stateVersion?&quot;</span> <span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+<ul>
+<li><code>seq</code>：保证事件有序</li>
+<li><code>stateVersion</code>：增量同步，避免全量刷新 UI</li>
+</ul>
+<p>这套设计本质上就是一套 <strong>轻量级流处理协议</strong>。</p>
+<hr>
+<h2 id="三、记忆系统：文件即真理"><a href="#三、记忆系统：文件即真理" class="headerlink" title="三、记忆系统：文件即真理"></a>三、记忆系统：文件即真理</h2><p>这是 Clawdbot 最“反主流”的设计之一。</p>
+<h3 id="1-存储结构"><a href="#1-存储结构" class="headerlink" title="1. 存储结构"></a>1. 存储结构</h3><p>所有记忆都在本地文件系统：</p>
+<figure class="highlight dos"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs dos">~/clawd/<br>├── IDENTITY.<span class="hljs-built_in">md</span><br>├── SOUL.<span class="hljs-built_in">md</span><br>├── TOOLS.<span class="hljs-built_in">md</span><br>└── memory/<br>    ├── <span class="hljs-number">2026</span>-<span class="hljs-number">02</span>-<span class="hljs-number">01</span>.<span class="hljs-built_in">md</span><br></code></pre></td></tr></table></figure>
+
+<p>你可以直接用 VS Code 打开、修改。</p>
+<p><strong>你改了什么，AI 就真的记住了什么。</strong></p>
+<hr>
+<h3 id="2-检索机制：BM25-向量混合"><a href="#2-检索机制：BM25-向量混合" class="headerlink" title="2. 检索机制：BM25 + 向量混合"></a>2. 检索机制：BM25 + 向量混合</h3><ul>
+<li>向量搜索（0.7）：语义相似</li>
+<li>BM25（0.3）：精确匹配</li>
+</ul>
+<p>底层使用 <strong>SQLite-vec</strong>，无需部署独立向量数据库。</p>
+<hr>
+<h3 id="3-静默刷新（Silent-Agent-Round）"><a href="#3-静默刷新（Silent-Agent-Round）" class="headerlink" title="3. 静默刷新（Silent Agent Round）"></a>3. 静默刷新（Silent Agent Round）</h3><p>当上下文快满时：</p>
+<ul>
+<li>AI 不回你</li>
+<li>先总结</li>
+<li>写入 <code>memory/*.md</code></li>
+</ul>
+<p>下次通过 RAG 再加载。</p>
+<p>这解决了 <strong>“长对话一定会忘事”</strong> 的老问题。</p>
+<hr>
+<h2 id="四、Heartbeat：让-AI-具备时间感"><a href="#四、Heartbeat：让-AI-具备时间感" class="headerlink" title="四、Heartbeat：让 AI 具备时间感"></a>四、Heartbeat：让 AI 具备时间感</h2><p>Heartbeat 本质是一个 <strong>带推理能力的定时任务系统</strong>。</p>
+<p>配置在 <code>HEARTBEAT.md</code> 里，而不是代码中。</p>
+<p>它可以：</p>
+<ul>
+<li>定时检查日志</li>
+<li>主动发现异常</li>
+<li>在合适的时间联系你（不会半夜骚扰）</li>
+</ul>
+<p>这让 AI 从 <strong>“被动响应”</strong> 进化成 <strong>“主动值班”</strong>。</p>
+<hr>
+<h2 id="五、一个完整工作流示例"><a href="#五、一个完整工作流示例" class="headerlink" title="五、一个完整工作流示例"></a>五、一个完整工作流示例</h2><p><strong>场景：用手机分析家里电脑的 Spark 报错</strong></p>
+<ol>
+<li>Telegram 触发任务</li>
+<li>Pi Agent 制定计划</li>
+<li>bash &#x2F; read &#x2F; write 循环执行</li>
+<li>结果写入长期记忆</li>
+<li>主动反馈给你</li>
+</ol>
+<p>你只发一句话，剩下的全是系统在跑。</p>
+<hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>传统 AI 更像是 <strong>“拨号上网”</strong>：你点，它才醒。<br>Clawdbot 更像是 <strong>“永久在线”</strong>：</p>
+<ul>
+<li>有心跳</li>
+<li>有记忆</li>
+<li>有时间感</li>
+<li>有设备边界意识</li>
+</ul>
+<p>它不是在“陪你聊天”，而是在<strong>帮你值班</strong>。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Knowledge/" class="category-chain-item">Knowledge</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Knowledge/Agent/" class="category-chain-item">Agent</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Knowledge/" class="print-no-link">#Knowledge</a>
+      
+        <a href="/tags/LLM/" class="print-no-link">#LLM</a>
+      
+        <a href="/tags/Data/" class="print-no-link">#Data</a>
+      
+        <a href="/tags/Agent/" class="print-no-link">#Agent</a>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E4%BA%BA%E5%BF%AB%E9%80%9F%E5%AD%A6-AI/" class="print-no-link">#数据人快速学 AI</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>2026 开年王炸：从 Clawdbot 到 Moltbot，真正的个人 AI 时代来了？(技术细节)</div>
+      <div>https://norushcoder.com/2026/02/01/Details-Of-Clawdbot-20260201/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>RichyLiu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年2月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/02/01/Clawdbot-20260201/" title="GitHub 两周 100k Star：聊聊最近火出圈的 Moltbot (原 Clawdbot)">
+                        <span class="hidden-mobile">GitHub 两周 100k Star：聊聊最近火出圈的 Moltbot (原 Clawdbot)</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       Richy <i class="iconfont icon-love"></i> Alyssa 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        pv 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        uv 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

@@ -1,0 +1,835 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/image/myico.ico">
+  <link rel="icon" href="/image/myico.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="RichyLiu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="GitHub 两周 100k Star：聊聊最近火出圈的 Moltbot (原 Clawdbot)这两周，技术圈几乎被一个叫 Clawdbot（现更名为 Moltbot）的项目刷屏了。 数据表现非常直观：2 周内 Star 数突破 100k。对比 LangChain 或 Dify 这种老牌框架，Moltbot 的增长曲线几乎是垂直的。这种热度通常意味着它击中了某种长期未被满足的痛点。 1. 它到底">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GitHub 两周 100k Star：聊聊最近火出圈的 Moltbot (原 Clawdbot)">
+<meta property="og:url" content="https://norushcoder.com/2026/02/01/Clawdbot-20260201/index.html">
+<meta property="og:site_name" content="NoRushCoder">
+<meta property="og:description" content="GitHub 两周 100k Star：聊聊最近火出圈的 Moltbot (原 Clawdbot)这两周，技术圈几乎被一个叫 Clawdbot（现更名为 Moltbot）的项目刷屏了。 数据表现非常直观：2 周内 Star 数突破 100k。对比 LangChain 或 Dify 这种老牌框架，Moltbot 的增长曲线几乎是垂直的。这种热度通常意味着它击中了某种长期未被满足的痛点。 1. 它到底">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-02-01T07:28:32.000Z">
+<meta property="article:modified_time" content="2026-02-02T09:14:35.556Z">
+<meta property="article:author" content="RichyLiu">
+<meta property="article:tag" content="Agent">
+<meta property="article:tag" content="Data">
+<meta property="article:tag" content="Knowledge">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="数据人快速学 AI">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>GitHub 两周 100k Star：聊聊最近火出圈的 Moltbot (原 Clawdbot) - NoRushCoder</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"norushcoder.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"qiD7FevHp6LALNsUCu4X1Vat-gzGzoHsz","app_key":"V7r8vUp1yx4wbqU2QZ8h5KUF","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>NoRushCoder</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="GitHub 两周 100k Star：聊聊最近火出圈的 Moltbot (原 Clawdbot)"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-02-01 15:28" pubdate>
+          2026年2月1日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          21 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> times
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">GitHub 两周 100k Star：聊聊最近火出圈的 Moltbot (原 Clawdbot)</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <h2 id="GitHub-两周-100k-Star：聊聊最近火出圈的-Moltbot-原-Clawdbot"><a href="#GitHub-两周-100k-Star：聊聊最近火出圈的-Moltbot-原-Clawdbot" class="headerlink" title="GitHub 两周 100k Star：聊聊最近火出圈的 Moltbot (原 Clawdbot)"></a>GitHub 两周 100k Star：聊聊最近火出圈的 Moltbot (原 Clawdbot)</h2><p>这两周，技术圈几乎被一个叫 <strong>Clawdbot</strong>（现更名为 <strong>Moltbot</strong>）的项目刷屏了。</p>
+<p>数据表现非常直观：<strong>2 周内 Star 数突破 100k</strong>。对比 LangChain 或 Dify 这种老牌框架，Moltbot 的增长曲线几乎是垂直的。这种热度通常意味着它击中了某种长期未被满足的痛点。</p>
+<h3 id="1-它到底解决了什么问题？"><a href="#1-它到底解决了什么问题？" class="headerlink" title="1. 它到底解决了什么问题？"></a>1. 它到底解决了什么问题？</h3><p>简单来说，Moltbot 不是另一个网页版的对话框，而是一个<strong>运行在本地的系统级 Agent 网关</strong>。</p>
+<p>传统的 ChatGPT 或 Claude 是“被动”的：你提问，它回答。而 Moltbot 的定位更接近于一个“数字管家”。它住在你的电脑后台，通过 API 桥接了你的日历、邮件、Slack 甚至是本地文件系统。</p>
+<h3 id="2-核心差异：从“对话框”到“工作流”"><a href="#2-核心差异：从“对话框”到“工作流”" class="headerlink" title="2. 核心差异：从“对话框”到“工作流”"></a>2. 核心差异：从“对话框”到“工作流”</h3><p>对于开发者来说，Moltbot 吸引人的地方不在于它能写诗，而在于它的三个底层逻辑：</p>
+<ul>
+<li><strong>主动性（Proactive）：</strong> 这是一个很重要的转变。它会根据日历节点或任务状态主动找你。比如检测到你半小时后有会议，它会主动在 Telegram 问你是否需要整理背景资料，而不是等你去找它。</li>
+<li><strong>本地化记忆（Long-term Memory）：</strong> 它在本地维护一个 <code>MEMORY.md</code>。这意味着它能随着使用时间的增加，逐渐理解你的技术栈偏好、项目背景和写作风格。它不是在做简单的上下文填充，而是在本地构建你的个人知识库。</li>
+<li><strong>隐私与权限控制：</strong> 虽然它调用闭源模型（Claude&#x2F;Gemini）的推理能力，但所有的任务编排、敏感数据存储都在本地。对于我们这种对数据敏感的开发者来说，这种“逻辑本地化”的方案比全云端助手更可靠。</li>
+</ul>
+<h3 id="3-快速部署并使用"><a href="#3-快速部署并使用" class="headerlink" title="3. 快速部署并使用"></a>3. 快速部署并使用</h3><ol>
+<li>Moltbot 依赖 Node.js 和 Git，首先保证安装了 Node.js 和 Git。<br>（Node.js 是JavaS   cript运行环境，Git 是版本控制工具,npm是Node.js的包管理工具）<br>node.js的安装教程网上有很多，这里就不展开了，最后应该做到，在终端中输入<br><code>node -v</code><br><code>npm -v</code><br><code>git -v</code><br>能够有对应的版本号。</li>
+<li>一键安装<br>在终端中输入</li>
+</ol>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">git <span class="hljs-keyword">clone</span> <span class="hljs-title">https</span>://github.com/openclaw/openclaw.git<br>cd openclaw<br><br>pnpm install<br>pnpm ui:build <span class="hljs-comment"># auto-installs UI deps on first run</span><br>pnpm build<br><br>pnpm openclaw onboard --install-daemon<br><br><span class="hljs-comment"># Dev loop (auto-reload on TS changes)</span><br>pnpm gateway:watch<br></code></pre></td></tr></table></figure>
+<p>首先在终端输入：</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">git <span class="hljs-keyword">clone</span> <span class="hljs-title">https</span>://github.com/openclaw/openclaw.git<br></code></pre></td></tr></table></figure>
+<p>如果只是为了功能，无需下载完整的仓库，只需安装最新的 release 版本即可。</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">git <span class="hljs-keyword">clone</span> <span class="hljs-title">--depth</span> <span class="hljs-number">1</span> https://github.com/openclaw/openclaw.git<br></code></pre></td></tr></table></figure>
+<p>出现</p>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">Cloning</span> into &#x27;openclaw&#x27;...<br><span class="hljs-attribute">remote</span>: Enumerating objects: <span class="hljs-number">5032</span>, done.<br><span class="hljs-attribute">remote</span>: Counting objects: <span class="hljs-number">100</span>% (<span class="hljs-number">5032</span>/<span class="hljs-number">5032</span>), done.<br><span class="hljs-attribute">remote</span>: Compressing objects: <span class="hljs-number">100</span>% (<span class="hljs-number">4579</span>/<span class="hljs-number">4579</span>), done.<br><span class="hljs-attribute">remote</span>: Total <span class="hljs-number">5032</span> (delta <span class="hljs-number">337</span>), reused <span class="hljs-number">3081</span> (delta <span class="hljs-number">314</span>), pack-reused <span class="hljs-number">0</span> (from <span class="hljs-number">0</span>)<br><span class="hljs-attribute">Receiving</span> objects: <span class="hljs-number">100</span>% (<span class="hljs-number">5032</span>/<span class="hljs-number">5032</span>), <span class="hljs-number">17</span>.<span class="hljs-number">51</span> MiB | <span class="hljs-number">83</span>.<span class="hljs-number">00</span> KiB/s, done.<br><span class="hljs-attribute">Resolving</span> deltas: <span class="hljs-number">100</span>% (<span class="hljs-number">337</span>/<span class="hljs-number">337</span>), done.<br></code></pre></td></tr></table></figure>
+<p>说明第一步下载已经完成。<br>接下来我们打开目标文件夹，</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash"><span class="hljs-built_in">cd</span> openclaw     <br></code></pre></td></tr></table></figure>
+<p>通过pnpm安装所有依赖,这是一个比npm更好的包管理工具，几乎已经代替了npm了  </p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmake">pnpm <span class="hljs-keyword">install</span>    <br></code></pre></td></tr></table></figure>
+
+<p>出现类似</p>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">. postinstall$ <span class="hljs-keyword">node</span> <span class="hljs-title">scripts</span>/postinstall.js<br>└─ Done <span class="hljs-keyword">in</span> <span class="hljs-number">133ms</span><br>packages/clawdbot postinstall$ <span class="hljs-keyword">node</span> <span class="hljs-title">./scripts</span>/postinstall.js<br>│ clawdbot renamed -&gt; openclaw<br>└─ Done <span class="hljs-keyword">in</span> <span class="hljs-number">32ms</span><br>packages/moltbot postinstall$ <span class="hljs-keyword">node</span> <span class="hljs-title">./scripts</span>/postinstall.js<br>│ moltbot renamed -&gt; openclaw<br>└─ Done <span class="hljs-keyword">in</span> <span class="hljs-number">31ms</span><br>Done <span class="hljs-keyword">in</span> <span class="hljs-number">8m</span> <span class="hljs-number">23.5s</span> using pnpm v10.<span class="hljs-number">23.0</span><br></code></pre></td></tr></table></figure>
+<p>说明安装完成<br>接下来我们安装ui依赖</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">pnpm ui:<span class="hljs-keyword">build</span><br><span class="hljs-keyword"></span>pnpm <span class="hljs-keyword">build</span><br><span class="hljs-keyword"></span>openClaw onboard --<span class="hljs-keyword">install-daemon</span><br></code></pre></td></tr></table></figure>
+<p>这三行分别是在渲染开发着打包好的ui，启动服务，然后给予权限，onboard代表<br>这三行分别是在渲染开发着打包好的ui，启动服务，然后给予权限，onboardOnboard (授权)：引导你完成文件夹访问、日历、甚至摄像头的隐私授权（macOS 会弹出很多确认框）。</p>
+<p>Install-Daemon (注册常驻)：把程序注册到系统的 LaunchAgents 列表里。<br>完成这一步后，即便你关掉终端，AI 也会在后台一直活着，随时响应你的 Telegram 指令或心跳任务。<br>做完这一步以后会有很多认证框，也就是权限申请，请按照提示进行操作。</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs nix"><span class="hljs-operator">&gt;</span> vite build<br><br>vite v7.<span class="hljs-number">3.1</span> building client environment for production...<br>✓ <span class="hljs-number">119</span> modules transformed.<br><span class="hljs-symbol">../dist/control-ui/index.html</span>                   <span class="hljs-number">0.69</span> kB │ <span class="hljs-params">gzip:</span>  <span class="hljs-number">0.37</span> kB<br><span class="hljs-symbol">../dist/control-ui/assets/index-BKPyesll.css</span>   <span class="hljs-number">74.85</span> kB │ <span class="hljs-params">gzip:</span> <span class="hljs-number">13.14</span> kB<br><span class="hljs-symbol">../dist/control-ui/assets/index-kjHVNdSc.js</span>   <span class="hljs-number">361.23</span> kB │ <span class="hljs-params">gzip:</span> <span class="hljs-number">97.34</span> kB │ <span class="hljs-params">map:</span> <span class="hljs-number">1</span>,<span class="hljs-number">018.84</span> kB<br>✓ built <span class="hljs-keyword">in</span> <span class="hljs-number">580</span>ms<br></code></pre></td></tr></table></figure>
+<p>这个说明ui已经编译成功</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs stylus">&gt; bash scripts/bundle-a2ui<span class="hljs-selector-class">.sh</span><br><br>&lt;DIR&gt;/a2ui<span class="hljs-selector-class">.bundle</span><span class="hljs-selector-class">.js</span>  chunk │ size: <span class="hljs-number">537.66</span> kB                                                                                                                                                                                                                              <br>                                                                                                                                                                                                                                                                           <br>✔ rolldown v1.<span class="hljs-number">0.0</span>-rc.<span class="hljs-number">2</span> Finished <span class="hljs-keyword">in</span> <span class="hljs-number">36.71</span> ms                                                                                                                                                                                                                               <br><span class="hljs-selector-attr">[copy-hook-metadata]</span> Copied boot-md/HOOK<span class="hljs-selector-class">.md</span><br><span class="hljs-selector-attr">[copy-hook-metadata]</span> Copied command-logger/HOOK<span class="hljs-selector-class">.md</span><br><span class="hljs-selector-attr">[copy-hook-metadata]</span> Copied session-memory/HOOK<span class="hljs-selector-class">.md</span><br><span class="hljs-selector-attr">[copy-hook-metadata]</span> Copied soul-evil/HOOK<span class="hljs-selector-class">.md</span><br><span class="hljs-selector-attr">[copy-hook-metadata]</span> Done<br></code></pre></td></tr></table></figure>
+
+<p>接下来我们开始基础配置，输入</p>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ada">openClaw onboard <span class="hljs-comment">--install-daemon</span><br></code></pre></td></tr></table></figure>
+<p>首先我们会看到一个安全性的申明</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"> OpenClaw <span class="hljs-number">2026.1</span><span class="hljs-number">.30</span> (<span class="hljs-number">76</span>b5208) — Chat automation <span class="hljs-keyword">for</span> people who peaked at IRC.<br><br>▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄<br>██░▄▄▄░██░▄▄░██░▄▄▄██░▀██░██░▄▄▀██░████░▄▄▀██░███░██<br>██░███░██░▀▀░██░▄▄▄██░█░█░██░█████░████░▀▀░██░█░█░██<br>██░▀▀▀░██░█████░▀▀▀██░██▄░██░▀▀▄██░▀▀░█░██░██▄▀▄▀▄██<br>▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀<br>                  🦞 OPENCLAW 🦞                    <br> <br>┌  OpenClaw onboarding<br>│<br>◇  <span class="hljs-keyword">Security</span> ──────────────────────────────────────────────────────────────────────────────╮<br>│                                                                                         │<br>│  <span class="hljs-keyword">Security</span> <span class="hljs-built_in">warning</span> — please <span class="hljs-keyword">read</span>.                                                        │<br>│                                                                                         │<br>│  OpenClaw <span class="hljs-keyword">is</span> a hobby project <span class="hljs-keyword">and</span> still <span class="hljs-keyword">in</span> beta. Expect sharp edges.                     │<br>│  This bot can <span class="hljs-keyword">read</span> files <span class="hljs-keyword">and</span> run actions <span class="hljs-keyword">if</span> tools are enabled.                          │<br>│  A bad prompt can trick it <span class="hljs-keyword">into</span> doing unsafe things.                                    │<br>│                                                                                         │<br>│  <span class="hljs-keyword">If</span> you’re <span class="hljs-keyword">not</span> comfortable <span class="hljs-keyword">with</span> basic <span class="hljs-keyword">security</span> <span class="hljs-keyword">and</span> <span class="hljs-keyword">access</span> control, don’t run OpenClaw.  │<br>│  Ask someone experienced <span class="hljs-keyword">to</span> help <span class="hljs-keyword">before</span> enabling tools <span class="hljs-keyword">or</span> exposing it <span class="hljs-keyword">to</span> the internet.  │<br>│                                                                                         │<br>│  Recommended baseline:                                                                  │<br>│  - Pairing/allowlists + mention gating.                                                 │<br>│  - Sandbox + least-privilege tools.                                                     │<br>│  - Keep secrets <span class="hljs-keyword">out</span> <span class="hljs-keyword">of</span> the agent’s reachable filesystem.                                │<br>│  - Use the strongest available model <span class="hljs-keyword">for</span> <span class="hljs-keyword">any</span> bot <span class="hljs-keyword">with</span> tools <span class="hljs-keyword">or</span> untrusted inboxes.       │<br>│                                                                                         │<br>│  Run regularly:                                                                         │<br>│  openclaw <span class="hljs-keyword">security</span> audit <span class="hljs-comment">--deep                                                         │</span><br>│  openclaw <span class="hljs-keyword">security</span> audit <span class="hljs-comment">--fix                                                          │</span><br>│                                                                                         │<br>│  Must <span class="hljs-keyword">read</span>: https://docs.openclaw.ai/gateway/<span class="hljs-keyword">security</span>                                   │<br>│                                                                                         │<br>├─────────────────────────────────────────────────────────────────────────────────────────╯<br>│<br>◆  I understand this <span class="hljs-keyword">is</span> powerful <span class="hljs-keyword">and</span> inherently risky. <span class="hljs-keyword">Continue</span>?<br>│  ○ Yes / ● <span class="hljs-keyword">No</span><br><br></code></pre></td></tr></table></figure>
+<p>输入<code>Yes</code>继续</p>
+<p>然后我们会看到</p>
+<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs vim">  Onboarding <span class="hljs-keyword">mode</span><br>│  ● QuickStart (Configure details <span class="hljs-keyword">later</span> via openclaw configure.)<br>│  ○ Manual<br><br></code></pre></td></tr></table></figure>
+<p>这是在选择配置模式。<br>● QuickStart (快速开始 - 推荐初次尝试)<br>这是目前光标默认选中的选项（那个实心圆点）。</p>
+<p>它的行为：系统会跳过大部分繁琐的配置，直接使用一套通用的默认参数（比如默认存储路径在你的家目录、默认开启几个基础插件）。</p>
+<p>后续操作：它会直接提示你输入最核心的 API Key（比如 Claude 或 Gemini 的 Key）。</p>
+<p>适合场景：如果你现在只想赶紧看到那个 WebSocket 控制面板长什么样，选这个。以后任何细节都可以通过运行 openClaw configure 来改。</p>
+<ol start="2">
+<li>○ Manual (手动配置)<br>这是给极客准备的“全手动档”。</li>
+</ol>
+<p>它的行为：它会像查户口一样一项项问你：</p>
+<p>监听端口：Gateway 要跑在哪个端口（比如你想把默认的 3000 改掉）？</p>
+<p>存储路径：你要把 MEMORY.md 存哪？（这对你很重要，因为你之前提到想放在外置硬盘，选这个模式可以现在就指定路径）。</p>
+<p>自启选项：是否要立即安装守护进程（Daemon）？</p>
+<p>插件开关：开启哪些特定的 Hooks。</p>
+<p>适合场景：你想从第一秒起就完全掌控系统的每一个字节。<br>初次使用我们采用quickstart模式,如果以后想了解更多的技术细节，我们可以采用manual模式。<br>接下来我们选择模型，博主有deepseek的token，选择openai（兼容）</p>
+<figure class="highlight tp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs tp">Model/auth provider<br>│  ●  OpenAI<br>│  ○ Anthropic<br>│  ○ MiniMax<br>│  ○ Moonshot AI<br>│  ○ Google<br>│  ○ OpenRouter<br>│  ○ Qwen<br>│  ○ <span class="hljs-keyword">Z</span>.AI (GLM <span class="hljs-number">4</span><span class="hljs-number">.7</span>)<br>│  ○ Copilot<br>│  ○ Vercel AI Gateway<br>│  ○ OpenCode Zen<br>│  ○ Xiaomi<br>│  ○ Synthetic<br>│  ○ Venice AI<br>│   ○  <span class="hljs-keyword">Skip</span> for now<br><br></code></pre></td></tr></table></figure>
+
+<p>输入你的api Key</p>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs oxygene"> Model/auth provider<br>│  OpenAI<br>│<br>◇  OpenAI auth <span class="hljs-keyword">method</span><br>│  <span class="hljs-title function_">OpenAI</span> <span class="hljs-title function_">API</span> <span class="hljs-title function_">key</span><br>│<br>◆  <span class="hljs-title function_">Enter</span> <span class="hljs-title function_">OpenAI</span> <span class="hljs-title function_">API</span> <span class="hljs-title function_">key</span><br></code></pre></td></tr></table></figure>
+
+<p>选择模型</p>
+<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs subunit"> Default model<br>│  ○ Keep current (default: anthropic/claude-opus<span class="hljs-string">-4</span><span class="hljs-string">-5</span>)<br>│  ○ Enter model manually<br>│  ● openai/codex-mini-latest (Codex Mini · ctx 195k · reasoning)<br>│  ○ openai/gpt<span class="hljs-string">-4</span><br>│  ○ openai/gpt<span class="hljs-string">-4</span>-turbo<br>│  ○ openai/gpt<span class="hljs-string">-4</span>.1<br>│  ○ openai/gpt<span class="hljs-string">-4</span>.1-mini<br>│  ○ openai/gpt<span class="hljs-string">-4</span>.1-nano<br>│  ○ openai/gpt<span class="hljs-string">-4</span>o<br>│  ○ openai/gpt<span class="hljs-string">-4</span>o<span class="hljs-string">-2024</span><span class="hljs-string">-05</span><span class="hljs-string">-13</span><br>│  ○ openai/gpt<span class="hljs-string">-4</span>o<span class="hljs-string">-2024</span><span class="hljs-string">-08</span><span class="hljs-string">-06</span><br>│  ○ openai/gpt<span class="hljs-string">-4</span>o<span class="hljs-string">-2024</span><span class="hljs-string">-11</span><span class="hljs-string">-20</span><br>│  ○ openai/gpt<span class="hljs-string">-4</span>o-mini<br>│  ○ openai/gpt<span class="hljs-string">-5</span><br>│  ○ openai/gpt<span class="hljs-string">-5</span>-chat-latest<br>│  ○ openai/gpt<span class="hljs-string">-5</span>-mini<br>│  ○ openai/gpt<span class="hljs-string">-5</span>-nano<br>│  ○ openai/gpt<span class="hljs-string">-5</span>-pro<br>│  ○ openai/gpt<span class="hljs-string">-5</span>-codex<br>│  ○ openai/gpt<span class="hljs-string">-5</span>.1<br>│  ○ openai/gpt<span class="hljs-string">-5</span>.1-chat-latest<br>│  ○ openai/gpt<span class="hljs-string">-5</span>.1-codex<br>│  ○ openai/gpt<span class="hljs-string">-5</span>.1-codex-max<br>│  ○ openai/gpt<span class="hljs-string">-5</span>.1-codex-mini<br>│  ○ openai/gpt<span class="hljs-string">-5</span>.2<br>│  ○ openai/gpt<span class="hljs-string">-5</span>.2-chat-latest<br>│  ○ openai/gpt<span class="hljs-string">-5</span>.2-codex<br>│  ○ openai/gpt<span class="hljs-string">-5</span>.2-pro<br>│  ○ openai/o1<br>│  ○ openai/o1-pro<br>│  ○ openai/o3<br>│  ○ openai/o3-deep-research<br>│  ○ openai/o3-mini<br>│  ○ openai/o3-pro<br>│  ○ openai/o4-mini<br>│  ○ openai/o4-mini-deep-research<br><br></code></pre></td></tr></table></figure>
+<p>博主是deepseek，只能自己输入模型</p>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs gams">│<br>◇  Default <span class="hljs-keyword">model</span><br>│  Enter <span class="hljs-keyword">model</span> manually<br>│<br>◆  Default <span class="hljs-keyword">model</span><br>│  openai/deepseek-chat█<br></code></pre></td></tr></table></figure>
+
+
+<p>这里无法解析到模型，后边我们通过手动更改配置文件解决。<br>继续选择消息助手,这里选择discord，支持很多助手，但是discord比较常用 </p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">◇  Select channel (QuickStart)<br>│  <span class="hljs-keyword">Discord </span>(<span class="hljs-keyword">Bot </span>API)<br>│<br>◇  <span class="hljs-keyword">Discord </span><span class="hljs-keyword">bot </span>token ──────────────────────────────────────────────────────────────────────╮<br>│                                                                                          │<br>│  <span class="hljs-number">1</span>) <span class="hljs-keyword">Discord </span>Developer Portal → Applications → New Application                            │<br>│  <span class="hljs-number">2</span>) <span class="hljs-keyword">Bot </span>→ <span class="hljs-keyword">Add </span><span class="hljs-keyword">Bot </span>→ Reset Token → copy token                                             │<br>│  <span class="hljs-number">3</span>) OAuth2 → URL Generator → <span class="hljs-keyword">scope </span><span class="hljs-string">&#x27;bot&#x27;</span> → invite to your server                         │<br>│  Tip: enable Message Content Intent if you need message text. (<span class="hljs-keyword">Bot </span>→ Privileged Gateway  │<br>│  Intents → Message Content Intent)                                                       │<br>│  Docs: <span class="hljs-keyword">discord </span>                              │<br>│                                                                                          │<br>├──────────────────────────────────────────────────────────────────────────────────────────╯<br>│<br>◆  Enter <span class="hljs-keyword">Discord </span><span class="hljs-keyword">bot </span>token<br><br></code></pre></td></tr></table></figure>
+<p>在discord的界面按照提示操作，获取bot token</p>
+<p>首先进入discord开发者界面<a target="_blank" rel="noopener" href="https://discord.com/developers/applications/me">!创建一个bot</a>，<br>创建一个应用</p>
+<p>将应用的bot token加上去</p>
+<p>这里尽量选择recommended，我们选择白名单模式，只添加我们想让bot监听的频道。</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs nix">Configure Discord channels access<span class="hljs-operator">?</span><br>│  Yes<br>│<br>◇  Discord channels access<br>│  Allowlist (recommended)<br>│<br>◇  Discord channels allowlist (comma-separated)<br>│<br>│<br>◇  Selected channels ────────────────────────────────────────────╮<br>│                                                                │<br>│  Discord — very well supported right now. <span class="hljs-params">Docs:</span>                │<br>│  discord  │<br>│                                                                │<br>├────────────────────────────────────────────────────────────────╯<br>Updated <span class="hljs-symbol">~/.openclaw/openclaw.json</span><br>Workspace <span class="hljs-params">OK:</span> <span class="hljs-symbol">~/.openclaw/workspace</span><br>Sessions <span class="hljs-params">OK:</span> <span class="hljs-symbol">~/.openclaw/agents/main/sessions</span><br><br></code></pre></td></tr></table></figure>
+
+<p>这里边具体的频道我们后边添加<br>然后下载相关的<br>技能<br>这里选择想要使用的技能,让他慢慢下载：</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">Install </span>missing skill dependencies<br>│  ⏰ apple-reminders, 🧾 summarize<br>│<br>◓  <span class="hljs-keyword">Installing </span>apple-reminders…...<br></code></pre></td></tr></table></figure>
+
+<p>安装完成后还可能遇到提示</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs routeros">◇  <span class="hljs-built_in">Set</span> GOOGLE_PLACES_API_KEY <span class="hljs-keyword">for</span> goplaces?<br>│  <span class="hljs-literal">No</span><br>│<br>◆  <span class="hljs-built_in">Set</span> GOOGLE_PLACES_API_KEY <span class="hljs-keyword">for</span> local-places?<br>│  ○ <span class="hljs-literal">Yes</span> / ● <span class="hljs-literal">No</span><br>└<br><br></code></pre></td></tr></table></figure>
+<p>这个是谷歌places的api key，可以自己申请，这里选择no。我们目前用不到。</p>
+<p>然后他会</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs pgsql">◇  Hooks ──────────────────────────────────────────────────────────╮<br>│                                                                  │<br>│  Hooks let you automate actions <span class="hljs-keyword">when</span> agent commands are issued.  │<br>│  Example: Save <span class="hljs-keyword">session</span> context <span class="hljs-keyword">to</span> memory <span class="hljs-keyword">when</span> you issue /<span class="hljs-built_in">new</span>.    │<br>│                                                                  │<br>│  Learn more: https://docs.openclaw.ai/hooks                      │<br>│                                                                  │<br>├──────────────────────────────────────────────────────────────────╯<br>│<br>◆  <span class="hljs-keyword">Enable</span> hooks?<br>│  ◻ Skip <span class="hljs-keyword">for</span> now<br>│  ◻ 🚀 boot-md<br>│  ◻ 📝 command-logger<br>│  ◻ 💾 <span class="hljs-keyword">session</span>-memory<br>└<br><br></code></pre></td></tr></table></figure>
+<p>这里建议全勾选，这是在开启设定出厂设置的prompt\记录日志\长久记忆（见）的权限。如果不开启的话就相当于只是一个聊天窗口。</p>
+<p>最后会出现一段</p>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm"><span class="hljs-keyword">Install </span><span class="hljs-keyword">shell </span>completion <span class="hljs-keyword">script?</span><br></code></pre></td></tr></table></figure>
+<p>依然选择yes，这是在终端写代码的时候，会自动添加shell的补全功能。</p>
+<p>现在我们配置之前没有加进来的东西，<br>我们打开 没有的话可以写入一个</p>
+<figure class="highlight arcade"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs arcade">~<span class="hljs-regexp">/.openclaw/</span>openclaw.json<br></code></pre></td></tr></table></figure>
+<p>首先是LLM的apikey</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">&#123;</span><br>  <span class="hljs-attr">&quot;agents&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;defaults&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;model&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;primary&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;openai/deepseek-chat&quot;</span><br>      <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;providers&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;openai&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;apiKey&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你的apikey&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;baseUrl&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;https://api.deepseek.com/v1&quot;</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">&#125;</span><span class="hljs-punctuation">,</span><br>  <span class="hljs-attr">&quot;channels&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>    <span class="hljs-attr">&quot;discord&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>      <span class="hljs-attr">&quot;enabled&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;token&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;你的botkey&quot;</span><span class="hljs-punctuation">,</span><br>      <span class="hljs-attr">&quot;guilds&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>        <span class="hljs-attr">&quot;服务器id&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&#123;</span><br>          <span class="hljs-attr">&quot;users&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;userid&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>          <span class="hljs-attr">&quot;requireMention&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-literal"><span class="hljs-keyword">true</span></span><br>        <span class="hljs-punctuation">&#125;</span><br>      <span class="hljs-punctuation">&#125;</span><br>    <span class="hljs-punctuation">&#125;</span><br>  <span class="hljs-punctuation">&#125;</span><br>  <br><span class="hljs-punctuation">&#125;</span><br></code></pre></td></tr></table></figure>
+
+
+
+<p>接下来我们把机器人拉入频道，首先在<a target="_blank" rel="noopener" href="https://discord.com/developers/applications/1467715591962890362/bot%E4%B8%8B%E8%BE%B9%E6%89%BE%E5%88%B0">https://discord.com/developers/applications/1467715591962890362/bot下边找到</a><br>登录 Discord Developer Portal。</p>
+<p>点击你的 OpenClaw 机器人应用。</p>
+<p>在左侧菜单点击 Bot。</p>
+<p>向下拉找到 Privileged Gateway Intents 区域。</p>
+<p>把 Message Content Intent 开关打开（变成绿色）。</p>
+<p>点击底部的 Save Changes。</p>
+<p>然后在左侧点击</p>
+<p>第二步：生成“邀请函” (URL)<br>在同一个页面左侧点击 OAuth2 -&gt; URL Generator。</p>
+<p>在 Scopes 框里勾选：bot 和 applications.commands。</p>
+<p>在下方的 Bot Permissions 里勾选：</p>
+<p>Administrator (如果你是自己的服务器，直接给这个最省事)；</p>
+<p>或者选择 Read Messages&#x2F;View Channels, Send Messages, Embed Links, Read Message History。</p>
+<p>页面底部会生成一个 Generated URL，点击 Copy。</p>
+<p>第三步：把机器人拉入服务器<br>把刚才复制的链接粘贴到浏览器地址栏回车。</p>
+<p>选择你的 Discord 服务器（Server）。</p>
+<p>点击 Authorize，完成验证。</p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Knowledge/" class="category-chain-item">Knowledge</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Knowledge/Agent/" class="category-chain-item">Agent</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Knowledge/" class="print-no-link">#Knowledge</a>
+      
+        <a href="/tags/LLM/" class="print-no-link">#LLM</a>
+      
+        <a href="/tags/Data/" class="print-no-link">#Data</a>
+      
+        <a href="/tags/Agent/" class="print-no-link">#Agent</a>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E4%BA%BA%E5%BF%AB%E9%80%9F%E5%AD%A6-AI/" class="print-no-link">#数据人快速学 AI</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>GitHub 两周 100k Star：聊聊最近火出圈的 Moltbot (原 Clawdbot)</div>
+      <div>https://norushcoder.com/2026/02/01/Clawdbot-20260201/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>RichyLiu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年2月1日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/02/01/Details-Of-Clawdbot-20260201/" title="2026 开年王炸：从 Clawdbot 到 Moltbot，真正的个人 AI 时代来了？(技术细节)">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">2026 开年王炸：从 Clawdbot 到 Moltbot，真正的个人 AI 时代来了？(技术细节)</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/01/29/English_20260129/" title="备考雅思:2026-01-29">
+                        <span class="hidden-mobile">备考雅思:2026-01-29</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       Richy <i class="iconfont icon-love"></i> Alyssa 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        pv 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        uv 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>
