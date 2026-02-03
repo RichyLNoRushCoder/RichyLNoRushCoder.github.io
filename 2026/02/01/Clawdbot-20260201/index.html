@@ -21,13 +21,24 @@
   
     <meta name="description" content="GitHub 两周 100k Star：聊聊最近火出圈的 Moltbot（原 Clawdbot）最近两周，技术圈几乎被一个叫 Clawdbot（现更名为 Moltbot）的项目刷屏了。 数据也很直观：2 周内 Star 突破 100k。对比 LangChain、Dify 这类“老牌选手”，Moltbot 的增长曲线几乎是垂直往上冲的。一般这种热度，背后多半是它刚好戳中了某个长期没被好好解决的痛点。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2026 开年王炸：从 Clawdbot 到 Moltbot，真正的个人 AI 时代来了？(技术细节)">
+<meta property="og:title" content="2026 开年王炸：从 Clawdbot 到 Moltbot，真正的个人 AI 时代来了？">
 <meta property="og:url" content="https://norushcoder.com/2026/02/01/Clawdbot-20260201/index.html">
 <meta property="og:site_name" content="NoRushCoder">
 <meta property="og:description" content="GitHub 两周 100k Star：聊聊最近火出圈的 Moltbot（原 Clawdbot）最近两周，技术圈几乎被一个叫 Clawdbot（现更名为 Moltbot）的项目刷屏了。 数据也很直观：2 周内 Star 突破 100k。对比 LangChain、Dify 这类“老牌选手”，Moltbot 的增长曲线几乎是垂直往上冲的。一般这种热度，背后多半是它刚好戳中了某个长期没被好好解决的痛点。">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://norushcoder.com/images/Knowledge/Agent/Clawdbot/Githubstars.svg">
+<meta property="og:image" content="https://discord.com/developers/applications">
+<meta property="og:image" content="https://norushcoder.com/images/Knowledge/Agent/Clawdbot/step1.png">
+<meta property="og:image" content="https://norushcoder.com/images/Knowledge/Agent/Clawdbot/step2.png">
+<meta property="og:image" content="https://norushcoder.com/images/Knowledge/Agent/Clawdbot/step3.png">
+<meta property="og:image" content="https://norushcoder.com/images/Knowledge/Agent/Clawdbot/step4.png">
+<meta property="og:image" content="https://norushcoder.com/images/Knowledge/Agent/Clawdbot/step5.png">
+<meta property="og:image" content="https://norushcoder.com/images/Knowledge/Agent/Clawdbot/step6.png">
+<meta property="og:image" content="https://norushcoder.com/images/Knowledge/Agent/Clawdbot/step7.png">
+<meta property="og:image" content="https://norushcoder.com/images/Knowledge/Agent/Clawdbot/step8.png">
+<meta property="og:image" content="https://norushcoder.com/images/Knowledge/Agent/Clawdbot/step9.png">
 <meta property="article:published_time" content="2026-02-01T08:41:24.000Z">
-<meta property="article:modified_time" content="2026-02-03T06:57:00.253Z">
+<meta property="article:modified_time" content="2026-02-03T07:05:04.947Z">
 <meta property="article:author" content="RichyLiu">
 <meta property="article:tag" content="Agent">
 <meta property="article:tag" content="Data">
@@ -35,10 +46,11 @@
 <meta property="article:tag" content="LLM">
 <meta property="article:tag" content="数据人快速学 AI">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://norushcoder.com/images/Knowledge/Agent/Clawdbot/Githubstars.svg">
   
   
   
-  <title>2026 开年王炸：从 Clawdbot 到 Moltbot，真正的个人 AI 时代来了？(技术细节) - NoRushCoder</title>
+  <title>2026 开年王炸：从 Clawdbot 到 Moltbot，真正的个人 AI 时代来了？ - NoRushCoder</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -217,7 +229,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="2026 开年王炸：从 Clawdbot 到 Moltbot，真正的个人 AI 时代来了？(技术细节)"></span>
+            <span id="subtitle" data-typed-text="2026 开年王炸：从 Clawdbot 到 Moltbot，真正的个人 AI 时代来了？"></span>
           
         </div>
 
@@ -297,14 +309,14 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">2026 开年王炸：从 Clawdbot 到 Moltbot，真正的个人 AI 时代来了？(技术细节)</h1>
+            <h1 id="seo-header">2026 开年王炸：从 Clawdbot 到 Moltbot，真正的个人 AI 时代来了？</h1>
             
             
               <div class="markdown-body">
                 
                 <h2 id="GitHub-两周-100k-Star：聊聊最近火出圈的-Moltbot（原-Clawdbot）"><a href="#GitHub-两周-100k-Star：聊聊最近火出圈的-Moltbot（原-Clawdbot）" class="headerlink" title="GitHub 两周 100k Star：聊聊最近火出圈的 Moltbot（原 Clawdbot）"></a>GitHub 两周 100k Star：聊聊最近火出圈的 Moltbot（原 Clawdbot）</h2><p>最近两周，技术圈几乎被一个叫 <strong>Clawdbot</strong>（现更名为 <strong>Moltbot</strong>）的项目刷屏了。</p>
 <p>数据也很直观：<strong>2 周内 Star 突破 100k</strong>。对比 LangChain、Dify 这类“老牌选手”，Moltbot 的增长曲线几乎是垂直往上冲的。一般这种热度，背后多半是它刚好戳中了某个长期没被好好解决的痛点。</p>
-<p><a href="/images/Knowledge/Agent/Clawdbot/Githubstars.svg">!github-stars</a></p>
+<p><img src="/images/Knowledge/Agent/Clawdbot/Githubstars.svg" srcset="/img/loading.gif" lazyload alt="github-stars"></p>
 <h3 id="1）它到底解决了什么问题？"><a href="#1）它到底解决了什么问题？" class="headerlink" title="1）它到底解决了什么问题？"></a>1）它到底解决了什么问题？</h3><p>一句话概括：Moltbot 不是另一个“网页版对话框”，而是一个<strong>跑在本地的系统级 Agent 网关</strong>。</p>
 <p>传统 ChatGPT &#x2F; Claude 更像“被动式问答”：你问一句，它回一句。<br>而 Moltbot 的定位更像“数字管家”：它常驻在你的电脑后台，通过 API 把日历、邮件、Slack，甚至本地文件系统这些能力串起来，让 AI 不止能聊，还能“做事”。</p>
 <h3 id="2）核心差异：从“对话框”到“工作流”"><a href="#2）核心差异：从“对话框”到“工作流”" class="headerlink" title="2）核心差异：从“对话框”到“工作流”"></a>2）核心差异：从“对话框”到“工作流”</h3><p>对开发者来说，Moltbot 真正吸引人的点，通常不在“能不能写诗”，而在它的三套底层逻辑：</p>
@@ -395,8 +407,9 @@
 <ol>
 <li>去 Discord Developer Portal 创建应用</li>
 <li>Bot → Add Bot → Reset Token → 复制 token</li>
-<li>OAuth2 → URL Generator 生成邀请链接<br>4.打开 Message Content Intent<br>图示例：<br>进入<a target="_blank" rel="noopener" href="https://discord.com/developers/applications">https://discord.com/developers/applications</a><br><a href="/images/Knowledge/Agent/Clawdbot/step1.png">!Step1</a><br><a href="/images/Knowledge/Agent/Clawdbot/step2.png">!Step2</a><br><a href="/images/Knowledge/Agent/Clawdbot/step3.png">!Step3</a><br><a href="/images/Knowledge/Agent/Clawdbot/step4.png">!Step4</a><br><a href="/images/Knowledge/Agent/Clawdbot/step5.png">!Step5</a><br><a href="/images/Knowledge/Agent/Clawdbot/step6.png">!Step6</a><br><a href="/images/Knowledge/Agent/Clawdbot/step7.png">!Step7</a><br><a href="/images/Knowledge/Agent/Clawdbot/step8.png">!Step8</a><br><a href="/images/Knowledge/Agent/Clawdbot/step9.png">!Step9</a></li>
+<li>OAuth2 → URL Generator 生成邀请链接<br>4.打开 Message Content Intent</li>
 </ol>
+<p>图示例：<br>进入<img src="https://discord.com/developers/applications" srcset="/img/loading.gif" lazyload alt="开发者模式"><br><img src="/images/Knowledge/Agent/Clawdbot/step1.png" srcset="/img/loading.gif" lazyload alt="Step1"><br><img src="/images/Knowledge/Agent/Clawdbot/step2.png" srcset="/img/loading.gif" lazyload alt="Step2"><br><img src="/images/Knowledge/Agent/Clawdbot/step3.png" srcset="/img/loading.gif" lazyload alt="Step3"><br><img src="/images/Knowledge/Agent/Clawdbot/step4.png" srcset="/img/loading.gif" lazyload alt="Step4"></p>
 <p>你把 token 填进去后，可以选择频道访问策略。建议用 <strong>Allowlist（白名单）</strong>，只让 bot 监听指定频道，风险更可控。</p>
 <p>最后会看到类似：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">Updated ~/.openclaw/openclaw.json<br>Workspace OK: ~/.openclaw/workspace<br>Sessions OK: ~/.openclaw/agents/main/sessions<br></code></pre></td></tr></table></figure>
@@ -446,7 +459,7 @@
 <ol>
 <li><p><strong>开启 Message Content Intent</strong><br>Discord Developer Portal → 你的应用 → Bot → Privileged Gateway Intents<br>把 <strong>Message Content Intent</strong> 打开，保存。</p>
 </li>
-<li><p><strong>生成邀请链接</strong><br>OAuth2 → URL Generator<br>Scopes 勾选：<code>bot</code>、<code>applications.commands</code><br>Bot Permissions 勾选你需要的权限（省事可直接 Administrator；谨慎点就最小权限）</p>
+<li><p><strong>生成邀请链接</strong><br>OAuth2 → URL Generator<br>Scopes 勾选：<code>bot</code>、<code>applications.commands</code><br>Bot Permissions 勾选你需要的权限（省事可直接 Administrator；谨慎点就最小权限）<br><img src="/images/Knowledge/Agent/Clawdbot/step5.png" srcset="/img/loading.gif" lazyload alt="Step5"><br><img src="/images/Knowledge/Agent/Clawdbot/step6.png" srcset="/img/loading.gif" lazyload alt="Step6"><br><img src="/images/Knowledge/Agent/Clawdbot/step7.png" srcset="/img/loading.gif" lazyload alt="Step7"><br><img src="/images/Knowledge/Agent/Clawdbot/step8.png" srcset="/img/loading.gif" lazyload alt="Step8"><br><img src="/images/Knowledge/Agent/Clawdbot/step9.png" srcset="/img/loading.gif" lazyload alt="Step9"></p>
 </li>
 <li><p><strong>邀请进服务器</strong><br>复制 Generated URL，浏览器打开，选择服务器，Authorize 完成授权。</p>
 </li>
@@ -521,7 +534,7 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>2026 开年王炸：从 Clawdbot 到 Moltbot，真正的个人 AI 时代来了？(技术细节)</div>
+      <div>2026 开年王炸：从 Clawdbot 到 Moltbot，真正的个人 AI 时代来了？</div>
       <div>https://norushcoder.com/2026/02/01/Clawdbot-20260201/</div>
     </div>
     <div class="license-meta">
