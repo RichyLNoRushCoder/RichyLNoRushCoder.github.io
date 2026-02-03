@@ -27,7 +27,6 @@
 <meta property="og:description" content="GitHub 两周 100k Star：聊聊最近火出圈的 Moltbot（原 Clawdbot）最近两周，技术圈几乎被一个叫 Clawdbot（现更名为 Moltbot）的项目刷屏了。 数据也很直观：2 周内 Star 突破 100k。对比 LangChain、Dify 这类“老牌选手”，Moltbot 的增长曲线几乎是垂直往上冲的。一般这种热度，背后多半是它刚好戳中了某个长期没被好好解决的痛点。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://norushcoder.com/images/Knowledge/Agent/Clawdbot/Githubstars.svg">
-<meta property="og:image" content="https://discord.com/developers/applications">
 <meta property="og:image" content="https://norushcoder.com/images/Knowledge/Agent/Clawdbot/step1.png">
 <meta property="og:image" content="https://norushcoder.com/images/Knowledge/Agent/Clawdbot/step2.png">
 <meta property="og:image" content="https://norushcoder.com/images/Knowledge/Agent/Clawdbot/step3.png">
@@ -37,8 +36,9 @@
 <meta property="og:image" content="https://norushcoder.com/images/Knowledge/Agent/Clawdbot/step7.png">
 <meta property="og:image" content="https://norushcoder.com/images/Knowledge/Agent/Clawdbot/step8.png">
 <meta property="og:image" content="https://norushcoder.com/images/Knowledge/Agent/Clawdbot/step9.png">
+<meta property="og:image" content="https://norushcoder.com/images/Knowledge/Agent/Clawdbot/result.png">
 <meta property="article:published_time" content="2026-02-01T08:41:24.000Z">
-<meta property="article:modified_time" content="2026-02-03T07:05:04.947Z">
+<meta property="article:modified_time" content="2026-02-03T07:10:46.290Z">
 <meta property="article:author" content="RichyLiu">
 <meta property="article:tag" content="Agent">
 <meta property="article:tag" content="Data">
@@ -328,7 +328,7 @@
 <li><p><strong>隐私与权限控制</strong><br>哪怕它调用闭源模型（Claude &#x2F; Gemini）来做推理，但任务编排、敏感数据存储都在本地完成。对数据敏感、或者习惯把工作资料放在本地的同学来说，这种“逻辑本地化”的方案，比全云端助手更让人安心。</p>
 </li>
 </ul>
-<p>更细的技术细节我放在另一篇文章里：<br><a href="https://norushcoder.com/2026/02/01/Details-Of-Clawdbot-20260201/">!2026 开年王炸：从 Clawdbot 到 Moltbot，真正的个人 AI 时代来了？（技术细节）</a></p>
+<p>更细的技术细节我放在另一篇文章里：<br><a href="https://norushcoder.com/2026/02/01/Details-Of-Clawdbot-20260201/">2026 开年王炸：从 Clawdbot 到 Moltbot，真正的个人 AI 时代来了？（技术细节）</a></p>
 <hr>
 <h3 id="3）快速部署并使用（保姆级）"><a href="#3）快速部署并使用（保姆级）" class="headerlink" title="3）快速部署并使用（保姆级）"></a>3）快速部署并使用（保姆级）</h3><p>下面按“能跑起来”为第一目标来走一遍。</p>
 <h4 id="3-1-前置依赖"><a href="#3-1-前置依赖" class="headerlink" title="3.1 前置依赖"></a>3.1 前置依赖</h4><p>Moltbot 依赖 <strong>Node.js</strong> 和 <strong>Git</strong>（以及包管理工具）。先确认你本机装好了：</p>
@@ -409,7 +409,7 @@
 <li>Bot → Add Bot → Reset Token → 复制 token</li>
 <li>OAuth2 → URL Generator 生成邀请链接<br>4.打开 Message Content Intent</li>
 </ol>
-<p>图示例：<br>进入<img src="https://discord.com/developers/applications" srcset="/img/loading.gif" lazyload alt="开发者模式"><br><img src="/images/Knowledge/Agent/Clawdbot/step1.png" srcset="/img/loading.gif" lazyload alt="Step1"><br><img src="/images/Knowledge/Agent/Clawdbot/step2.png" srcset="/img/loading.gif" lazyload alt="Step2"><br><img src="/images/Knowledge/Agent/Clawdbot/step3.png" srcset="/img/loading.gif" lazyload alt="Step3"><br><img src="/images/Knowledge/Agent/Clawdbot/step4.png" srcset="/img/loading.gif" lazyload alt="Step4"></p>
+<p>图示例：<br>进入<a target="_blank" rel="noopener" href="https://discord.com/developers/applications">开发者模式</a><br><img src="/images/Knowledge/Agent/Clawdbot/step1.png" srcset="/img/loading.gif" lazyload alt="Step1"><br><img src="/images/Knowledge/Agent/Clawdbot/step2.png" srcset="/img/loading.gif" lazyload alt="Step2"><br><img src="/images/Knowledge/Agent/Clawdbot/step3.png" srcset="/img/loading.gif" lazyload alt="Step3"><br><img src="/images/Knowledge/Agent/Clawdbot/step4.png" srcset="/img/loading.gif" lazyload alt="Step4"></p>
 <p>你把 token 填进去后，可以选择频道访问策略。建议用 <strong>Allowlist（白名单）</strong>，只让 bot 监听指定频道，风险更可控。</p>
 <p>最后会看到类似：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">Updated ~/.openclaw/openclaw.json<br>Workspace OK: ~/.openclaw/workspace<br>Sessions OK: ~/.openclaw/agents/main/sessions<br></code></pre></td></tr></table></figure>
@@ -473,7 +473,7 @@
 <li>访问本地面板：<code>http://127.0.0.1:18789/</code></li>
 <li>或者在 Discord 里 @ 机器人对话（如果你开启了 requireMention 就必须 @）</li>
 </ul>
-<p><a href="/images/Knowledge/Agent/Clawdbot/result.png">!效果图</a></p>
+<p><img src="/images/Knowledge/Agent/Clawdbot/result.png" srcset="/img/loading.gif" lazyload alt="效果图"></p>
 
                 
               </div>
