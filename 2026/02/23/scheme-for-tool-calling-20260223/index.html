@@ -1,0 +1,862 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+
+  <link rel="apple-touch-icon" sizes="76x76" href="/image/myico.ico">
+  <link rel="icon" href="/image/myico.ico">
+  
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="author" content="RichyLiu">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="一个完整的工具调用框架，通常分为以下八层。 1️⃣ Tool Definition Layer（工具定义层）作用定义工具的“契约”。 包含 name description 参数 schema（JSON Schema &#x2F; Pydantic） 返回格式 权限标签 幂等性声明（可选）  为什么重要没有 schema，工具调用就是字符串拼接。 生产环境不允许。  2️⃣ Tool Regist">
+<meta property="og:type" content="article">
+<meta property="og:title" content="什么是大模型的工具调用框架？">
+<meta property="og:url" content="https://norushcoder.com/2026/02/23/scheme-for-tool-calling-20260223/index.html">
+<meta property="og:site_name" content="NoRushCoder">
+<meta property="og:description" content="一个完整的工具调用框架，通常分为以下八层。 1️⃣ Tool Definition Layer（工具定义层）作用定义工具的“契约”。 包含 name description 参数 schema（JSON Schema &#x2F; Pydantic） 返回格式 权限标签 幂等性声明（可选）  为什么重要没有 schema，工具调用就是字符串拼接。 生产环境不允许。  2️⃣ Tool Regist">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-02-23T09:14:39.000Z">
+<meta property="article:modified_time" content="2026-03-03T03:02:45.226Z">
+<meta property="article:author" content="RichyLiu">
+<meta property="article:tag" content="Agent">
+<meta property="article:tag" content="Data">
+<meta property="article:tag" content="Knowledge">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="数据人快速学 AI">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+  
+  <title>什么是大模型的工具调用框架？ - NoRushCoder</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1749284_5i9bdhy70f8.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/c/font_1736178_k526ubmyhba.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"norushcoder.com","root":"/","version":"1.9.8","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"follow_dnt":true,"baidu":null,"google":{"measurement_id":null},"tencent":{"sid":null,"cid":null},"leancloud":{"app_id":"qiD7FevHp6LALNsUCu4X1Vat-gzGzoHsz","app_key":"V7r8vUp1yx4wbqU2QZ8h5KUF","server_url":null,"path":"window.location.pathname","ignore_local":false},"umami":{"src":null,"website_id":null,"domains":null,"start_time":"2024-01-01T00:00:00.000Z","token":null,"api_server":null}},"search_path":"/local-search.xml","include_content_in_search":true};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+  
+
+
+
+  
+<meta name="generator" content="Hexo 8.1.1"></head>
+
+
+<body>
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>NoRushCoder</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/" target="_self">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/" target="_self">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/" target="_self">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/" target="_self">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/" target="_self">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="什么是大模型的工具调用框架？"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2026-02-23 17:14" pubdate>
+          2026年2月23日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          1.9k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          17 分钟
+        
+      </span>
+    
+
+    
+    
+      
+        <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+          <i class="iconfont icon-eye" aria-hidden="true"></i>
+          <span id="leancloud-page-views"></span> times
+        </span>
+        
+      
+      
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <h1 id="seo-header">什么是大模型的工具调用框架？</h1>
+            
+            
+              <div class="markdown-body">
+                
+                <p>一个完整的工具调用框架，通常分为以下八层。</p>
+<h1 id="1️⃣-Tool-Definition-Layer（工具定义层）"><a href="#1️⃣-Tool-Definition-Layer（工具定义层）" class="headerlink" title="1️⃣ Tool Definition Layer（工具定义层）"></a>1️⃣ Tool Definition Layer（工具定义层）</h1><h3 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h3><p>定义工具的“契约”。</p>
+<h3 id="包含"><a href="#包含" class="headerlink" title="包含"></a>包含</h3><ul>
+<li>name</li>
+<li>description</li>
+<li>参数 schema（JSON Schema &#x2F; Pydantic）</li>
+<li>返回格式</li>
+<li>权限标签</li>
+<li>幂等性声明（可选）</li>
+</ul>
+<h3 id="为什么重要"><a href="#为什么重要" class="headerlink" title="为什么重要"></a>为什么重要</h3><p>没有 schema，工具调用就是字符串拼接。</p>
+<p>生产环境不允许。</p>
+<hr>
+<h1 id="2️⃣-Tool-Registry（工具注册与边界层）"><a href="#2️⃣-Tool-Registry（工具注册与边界层）" class="headerlink" title="2️⃣ Tool Registry（工具注册与边界层）"></a>2️⃣ Tool Registry（工具注册与边界层）</h1><h3 id="作用-1"><a href="#作用-1" class="headerlink" title="作用"></a>作用</h3><ul>
+<li>管理可用工具列表</li>
+<li>做存在性检查</li>
+<li>做权限过滤</li>
+<li>支持插件化加载</li>
+</ul>
+<h3 id="解决的问题"><a href="#解决的问题" class="headerlink" title="解决的问题"></a>解决的问题</h3><ul>
+<li>模型调用不存在工具怎么办？</li>
+<li>不同用户能用不同工具怎么办？</li>
+<li>动态扩展工具怎么办？</li>
+</ul>
+<p>这是系统边界。</p>
+<hr>
+<h1 id="3️⃣-Tool-Routing-Layer（工具选择层）"><a href="#3️⃣-Tool-Routing-Layer（工具选择层）" class="headerlink" title="3️⃣ Tool Routing Layer（工具选择层）"></a>3️⃣ Tool Routing Layer（工具选择层）</h1><h3 id="作用-2"><a href="#作用-2" class="headerlink" title="作用"></a>作用</h3><p>决定“调用哪个工具”。</p>
+<h3 id="常见实现"><a href="#常见实现" class="headerlink" title="常见实现"></a>常见实现</h3><ul>
+<li>LLM function calling</li>
+<li>ReAct</li>
+<li>Embedding 路由</li>
+<li>规则匹配</li>
+<li>混合策略</li>
+</ul>
+<h3 id="解决的问题-1"><a href="#解决的问题-1" class="headerlink" title="解决的问题"></a>解决的问题</h3><ul>
+<li>工具很多时如何选？</li>
+<li>避免误触发</li>
+<li>控制调用成本</li>
+</ul>
+<hr>
+<h1 id="4️⃣-Argument-Generation-Validation（参数层）"><a href="#4️⃣-Argument-Generation-Validation（参数层）" class="headerlink" title="4️⃣ Argument Generation &amp; Validation（参数层）"></a>4️⃣ Argument Generation &amp; Validation（参数层）</h1><h3 id="作用-3"><a href="#作用-3" class="headerlink" title="作用"></a>作用</h3><p>处理模型生成的参数。</p>
+<h3 id="包含-1"><a href="#包含-1" class="headerlink" title="包含"></a>包含</h3><ul>
+<li>JSON 解析</li>
+<li>类型校验</li>
+<li>必填字段检查</li>
+<li>默认值填充</li>
+<li>自动纠错</li>
+<li>重试机制</li>
+</ul>
+<h3 id="解决的问题-2"><a href="#解决的问题-2" class="headerlink" title="解决的问题"></a>解决的问题</h3><ul>
+<li>参数缺失</li>
+<li>类型错误</li>
+<li>拼写错误</li>
+<li>幻觉字段</li>
+</ul>
+<p>这是第一道安全护栏。</p>
+<hr>
+<h1 id="5️⃣-Execution-Control-Layer（执行控制层）🔥最核心"><a href="#5️⃣-Execution-Control-Layer（执行控制层）🔥最核心" class="headerlink" title="5️⃣ Execution Control Layer（执行控制层）🔥最核心"></a>5️⃣ Execution Control Layer（执行控制层）🔥最核心</h1><p>这是框架真正的复杂度来源。</p>
+<h3 id="包含中间件链"><a href="#包含中间件链" class="headerlink" title="包含中间件链"></a>包含中间件链</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs text">Execution Layer<br> ├── Timeout<br> ├── Retry<br> ├── RateLimit<br> ├── Auth<br> ├── Audit<br> ├── Cache<br> ├── CostTracking<br> └── CircuitBreaker<br></code></pre></td></tr></table></figure>
+
+<h3 id="解决的问题-3"><a href="#解决的问题-3" class="headerlink" title="解决的问题"></a>解决的问题</h3><ul>
+<li>工具超时怎么办？</li>
+<li>API 失败怎么办？</li>
+<li>防止重复执行</li>
+<li>限制危险操作</li>
+<li>记录谁调用了什么</li>
+<li>控制成本</li>
+</ul>
+<p>没有这层，就不是工程系统。</p>
+<hr>
+<h1 id="6️⃣-State-Management（状态管理层）"><a href="#6️⃣-State-Management（状态管理层）" class="headerlink" title="6️⃣ State Management（状态管理层）"></a>6️⃣ State Management（状态管理层）</h1><p>Agent 不只是单步调用。</p>
+<h3 id="包含-2"><a href="#包含-2" class="headerlink" title="包含"></a>包含</h3><ul>
+<li>当前任务状态</li>
+<li>每步结果 artifacts</li>
+<li>依赖关系</li>
+<li>状态机（pending &#x2F; running &#x2F; failed）</li>
+</ul>
+<h3 id="解决的问题-4"><a href="#解决的问题-4" class="headerlink" title="解决的问题"></a>解决的问题</h3><ul>
+<li>多步任务如何串联？</li>
+<li>第3步失败怎么办？</li>
+<li>是否支持回滚？</li>
+<li>是否支持并行？</li>
+</ul>
+<p>很多人完全忽略这层。</p>
+<hr>
+<h1 id="7️⃣-Memory-Context-Layer（记忆与上下文层）"><a href="#7️⃣-Memory-Context-Layer（记忆与上下文层）" class="headerlink" title="7️⃣ Memory &amp; Context Layer（记忆与上下文层）"></a>7️⃣ Memory &amp; Context Layer（记忆与上下文层）</h1><p>工具调用必须结合上下文管理。</p>
+<h3 id="包含-3"><a href="#包含-3" class="headerlink" title="包含"></a>包含</h3><ul>
+<li>短期记忆（会话）</li>
+<li>长期记忆（向量库）</li>
+<li>结果摘要</li>
+<li>上下文裁剪</li>
+<li>Token 预算控制</li>
+</ul>
+<h3 id="解决的问题-5"><a href="#解决的问题-5" class="headerlink" title="解决的问题"></a>解决的问题</h3><ul>
+<li>上下文爆炸</li>
+<li>结果过大</li>
+<li>历史信息污染</li>
+<li>记忆写入策略</li>
+</ul>
+<p>工具调用和 RAG 在生产系统里是耦合的。</p>
+<hr>
+<h1 id="8️⃣-Grounding-Observation-Layer（结果注入层）"><a href="#8️⃣-Grounding-Observation-Layer（结果注入层）" class="headerlink" title="8️⃣ Grounding &amp; Observation Layer（结果注入层）"></a>8️⃣ Grounding &amp; Observation Layer（结果注入层）</h1><p>工具执行完成后：</p>
+<ul>
+<li>注入多少结果给模型？</li>
+<li>注入摘要还是全文？</li>
+<li>是否存储引用 ID？</li>
+<li>如何防止 hallucination？</li>
+</ul>
+<p>这是很多人忽视的一层。</p>
+<hr>
+<h1 id="9️⃣-Observability-Evaluation（可观测与评估层）"><a href="#9️⃣-Observability-Evaluation（可观测与评估层）" class="headerlink" title="9️⃣ Observability &amp; Evaluation（可观测与评估层）"></a>9️⃣ Observability &amp; Evaluation（可观测与评估层）</h1><p>这是生产级加分项。</p>
+<h3 id="包含-4"><a href="#包含-4" class="headerlink" title="包含"></a>包含</h3><ul>
+<li>Trace（调用链）</li>
+<li>延迟统计</li>
+<li>成功率</li>
+<li>成本统计</li>
+<li>自动化测试场景</li>
+</ul>
+<hr>
+<h1 id="你可以把完整框架理解成这样："><a href="#你可以把完整框架理解成这样：" class="headerlink" title="你可以把完整框架理解成这样："></a>你可以把完整框架理解成这样：</h1><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs text">User<br>  ↓<br>Planner / Router<br>  ↓<br>ToolCall (schema)<br>  ↓<br>Registry (存在性/权限)<br>  ↓<br>Argument Validation<br>  ↓<br>Execution Middleware<br>  ↓<br>External System<br>  ↓<br>Grounding<br>  ↓<br>State / Memory<br>  ↓<br>Next Step / Final Answer<br></code></pre></td></tr></table></figure>
+
+<p>现在我们来逐层解析每层的内容。</p>
+<p>首先我们讲解：</p>
+<h2 id="1-Tool-Definition-Layer（工具定义层）"><a href="#1-Tool-Definition-Layer（工具定义层）" class="headerlink" title="1. Tool Definition Layer（工具定义层）"></a>1. Tool Definition Layer（工具定义层）</h2><p>这一层首先我们要定义一个基本的工具类。<br>这里我们采用一个pydantic的库进行参数校验。<br>采用pydantic的库的好处是</p>
+<p>通过pydantic的库，我们可以定义工具的参数,不同的工具可以自动进行参数校验。<br>这个basemodel具有以下几个功能：</p>
+<h4 id="1-类型检查：如果我们需要的参数是str-但是我们传入的参数是int，那么这个库会自动修正"><a href="#1-类型检查：如果我们需要的参数是str-但是我们传入的参数是int，那么这个库会自动修正" class="headerlink" title="1. 类型检查：如果我们需要的参数是str,但是我们传入的参数是int，那么这个库会自动修正"></a>1. 类型检查：如果我们需要的参数是str,但是我们传入的参数是int，那么这个库会自动修正</h4><h4 id="2-缺失报错，如果我们缺少了参数，那么这个库会报错，我们可以把错误传给ai，让ai重新生成调用工具的参数。"><a href="#2-缺失报错，如果我们缺少了参数，那么这个库会报错，我们可以把错误传给ai，让ai重新生成调用工具的参数。" class="headerlink" title="2. 缺失报错，如果我们缺少了参数，那么这个库会报错，我们可以把错误传给ai，让ai重新生成调用工具的参数。"></a>2. 缺失报错，如果我们缺少了参数，那么这个库会报错，我们可以把错误传给ai，让ai重新生成调用工具的参数。</h4><h4 id="3-他会根据这个工具我们定义的参数格式，自动将json的需求拼入prompt中"><a href="#3-他会根据这个工具我们定义的参数格式，自动将json的需求拼入prompt中" class="headerlink" title="3. 他会根据这个工具我们定义的参数格式，自动将json的需求拼入prompt中"></a>3. 他会根据这个工具我们定义的参数格式，自动将json的需求拼入prompt中</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> __future__ <span class="hljs-keyword">import</span> annotations<br><br><span class="hljs-keyword">from</span> abc <span class="hljs-keyword">import</span> ABC, abstractmethod<br><span class="hljs-keyword">from</span> typing <span class="hljs-keyword">import</span> <span class="hljs-type">Any</span>, <span class="hljs-type">Dict</span>, <span class="hljs-type">Generic</span>, <span class="hljs-type">Type</span>, TypeVar<br><br><span class="hljs-keyword">from</span> pydantic <span class="hljs-keyword">import</span> BaseModel<br><br>ArgsT = TypeVar(<span class="hljs-string">&quot;ArgsT&quot;</span>, bound=BaseModel)<br><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Tool</span>(ABC, <span class="hljs-type">Generic</span>[ArgsT]):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    Day1: Tool + ArgsModel（Pydantic）</span><br><span class="hljs-string">    - Tool.name / Tool.description</span><br><span class="hljs-string">    - Tool.ArgsModel: 参数schema</span><br><span class="hljs-string">    - run(args): 执行逻辑</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    name: <span class="hljs-built_in">str</span><br>    description: <span class="hljs-built_in">str</span><br>    ArgsModel: <span class="hljs-type">Type</span>[ArgsT]<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">validate</span>(<span class="hljs-params">self, raw_args: <span class="hljs-type">Dict</span>[<span class="hljs-built_in">str</span>, <span class="hljs-type">Any</span>]</span>) -&gt; ArgsT:<br>        <span class="hljs-comment"># 统一用 schema 强校验（这就是后面“参数错怎么办”的入口）</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.ArgsModel.model_validate(raw_args)<br><br><span class="hljs-meta">    @abstractmethod</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">run</span>(<span class="hljs-params">self, args: ArgsT</span>) -&gt; <span class="hljs-type">Any</span>:<br>        <span class="hljs-keyword">raise</span> NotImplementedError<br><br><span class="hljs-comment"># 结构限定：每个工具必须关联一个具体的 ArgsModel（比如：查天气工具必须有 city 字段，且必须是 str 类型）。</span><br><br><span class="hljs-comment"># 状态限定：在 run 方法执行之前，validate 方法会将原始的、杂乱的字典（raw_args）转化成一个经过验证、类型确定的 BaseModel 实例。</span><br></code></pre></td></tr></table></figure>
+
+
+<h2 id="3-工具注册与边界层"><a href="#3-工具注册与边界层" class="headerlink" title="3. 工具注册与边界层"></a>3. 工具注册与边界层</h2><p>这一层我们用一个代码完成工具的定义操作<br>我们实现<br>注册工具、找工具、列出所有的工具、检查工具是否存在</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> __future__ <span class="hljs-keyword">import</span> annotations<br><br><span class="hljs-keyword">from</span> dataclasses <span class="hljs-keyword">import</span> dataclass, field<br><span class="hljs-keyword">from</span> typing <span class="hljs-keyword">import</span> <span class="hljs-type">Dict</span>, <span class="hljs-type">List</span><br><br><span class="hljs-keyword">from</span> toollab.tools.base <span class="hljs-keyword">import</span> Tool<br><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">ToolNotFoundError</span>(<span class="hljs-title class_ inherited__">KeyError</span>):<br>    <span class="hljs-keyword">pass</span><br><br><br><span class="hljs-meta">@dataclass</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">ToolRegistry</span>:<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    Day1: ToolRegistry（存在性检查）</span><br><span class="hljs-string">    - register / get / list</span><br><span class="hljs-string">    - 工具不存在时给出可用列表（这就是面试题1：工具名错怎么办）</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    _tools: <span class="hljs-type">Dict</span>[<span class="hljs-built_in">str</span>, Tool] = field(default_factory=<span class="hljs-built_in">dict</span>)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">register</span>(<span class="hljs-params">self, tool: Tool</span>) -&gt; <span class="hljs-literal">None</span>:<br>        <span class="hljs-keyword">if</span> tool.name <span class="hljs-keyword">in</span> <span class="hljs-variable language_">self</span>._tools:<br>            <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">f&quot;Tool already registered: <span class="hljs-subst">&#123;tool.name&#125;</span>&quot;</span>)<br>        <span class="hljs-variable language_">self</span>._tools[tool.name] = tool<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get</span>(<span class="hljs-params">self, name: <span class="hljs-built_in">str</span></span>) -&gt; Tool:<br>        <span class="hljs-keyword">if</span> name <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> <span class="hljs-variable language_">self</span>._tools:<br>            <span class="hljs-keyword">raise</span> ToolNotFoundError(<br>                <span class="hljs-string">f&quot;Tool not found: <span class="hljs-subst">&#123;name&#125;</span>. Available tools: <span class="hljs-subst">&#123;<span class="hljs-built_in">sorted</span>(self._tools.keys())&#125;</span>&quot;</span><br>            )<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>._tools[name]<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">list</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-type">List</span>[<span class="hljs-built_in">str</span>]:<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">sorted</span>(<span class="hljs-variable language_">self</span>._tools.keys())<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-Execution-Control-Layer（执行控制层）🔥"><a href="#2-Execution-Control-Layer（执行控制层）🔥" class="headerlink" title="2. Execution Control Layer（执行控制层）🔥"></a>2. Execution Control Layer（执行控制层）🔥</h2><p>这一层我们首先限定工具的调用模式：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> __future__ <span class="hljs-keyword">import</span> annotations<br><br><span class="hljs-keyword">from</span> typing <span class="hljs-keyword">import</span> <span class="hljs-type">Any</span>, <span class="hljs-type">Dict</span>, <span class="hljs-type">Optional</span><br><span class="hljs-keyword">from</span> pydantic <span class="hljs-keyword">import</span> BaseModel, Field<br><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">ToolCall</span>(<span class="hljs-title class_ inherited__">BaseModel</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    这是“模型输出”的结构化结果（今天先固定输出，后续再随机出错）。</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    tool_name: <span class="hljs-built_in">str</span> = Field(..., description=<span class="hljs-string">&quot;Name of the tool to call&quot;</span>)<br>    arguments: <span class="hljs-type">Dict</span>[<span class="hljs-built_in">str</span>, <span class="hljs-type">Any</span>] = Field(default_factory=<span class="hljs-built_in">dict</span>)<br>    call_id: <span class="hljs-built_in">str</span> = Field(<span class="hljs-string">&quot;call_001&quot;</span>, description=<span class="hljs-string">&quot;For tracing/debugging&quot;</span>)<br><br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">ToolObservation</span>(<span class="hljs-title class_ inherited__">BaseModel</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    工具执行后的结构化观测结果。</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    call_id: <span class="hljs-built_in">str</span><br>    tool_name: <span class="hljs-built_in">str</span><br>    ok: <span class="hljs-built_in">bool</span> = <span class="hljs-literal">True</span><br>    result: <span class="hljs-type">Any</span> = <span class="hljs-literal">None</span><br>    error: <span class="hljs-type">Optional</span>[<span class="hljs-built_in">str</span>] = <span class="hljs-literal">None</span><br></code></pre></td></tr></table></figure>
+<p>通过这样两个类指定模型输出的结构化结构和工具执行的结构化结果，我们可以确保模型输出的工具调用是符合我们定义的格式的，同时也可以确保工具执行的结果是符合我们定义的格式的。</p>
+<h3 id="3-Execution-Control-Layer（执行控制层-中间件链）"><a href="#3-Execution-Control-Layer（执行控制层-中间件链）" class="headerlink" title="3. Execution Control Layer（执行控制层 &#x2F; 中间件链）"></a>3. Execution Control Layer（执行控制层 &#x2F; 中间件链）</h3><p>执行层的主要目的是失败不会让系统崩、有重试策略、有退避策略、有 trace 可复盘。<br>通过这一串代码，我们可以优雅的实现，工具存在性校验、参数校验、超时等待、全程观测等功能。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> __future__ <span class="hljs-keyword">import</span> annotations<br><br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">import</span> math<br><span class="hljs-keyword">from</span> dataclasses <span class="hljs-keyword">import</span> dataclass<br><span class="hljs-keyword">from</span> typing <span class="hljs-keyword">import</span> <span class="hljs-type">Any</span>, <span class="hljs-type">Dict</span>, <span class="hljs-type">Optional</span><br><br><span class="hljs-keyword">from</span> pydantic <span class="hljs-keyword">import</span> ValidationError<br><br><span class="hljs-keyword">from</span> contracts <span class="hljs-keyword">import</span> ToolCall, ToolObservation<br><span class="hljs-keyword">from</span> tools.registry <span class="hljs-keyword">import</span> ToolRegistry, ToolNotFoundError<br><br><br><span class="hljs-meta">@dataclass</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">ExecutionConfig</span>:<br>    timeout_seconds: <span class="hljs-built_in">float</span> = <span class="hljs-number">1.0</span><br>    max_attempts: <span class="hljs-built_in">int</span> = <span class="hljs-number">3</span><br>    backoff_base_seconds: <span class="hljs-built_in">float</span> = <span class="hljs-number">0.2</span>  <span class="hljs-comment"># 0.2, 0.4, 0.8...</span><br><br><br><span class="hljs-meta">@dataclass</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">ToolExecutor</span>:<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    Day3：执行控制层最小实现</span><br><span class="hljs-string">    - registry 存在性检查</span><br><span class="hljs-string">    - schema 参数校验</span><br><span class="hljs-string">    - timeout（用 tool 自己的超时/或框架超时）</span><br><span class="hljs-string">    - retry（指数退避）</span><br><span class="hljs-string">    - trace（attempt、耗时、错误）</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    registry: ToolRegistry<br>    config: ExecutionConfig = ExecutionConfig()<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">execute</span>(<span class="hljs-params">self, call: ToolCall</span>) -&gt; ToolObservation:<br>        <span class="hljs-comment"># 1) tool existence</span><br>        <span class="hljs-keyword">try</span>:<br>            tool = <span class="hljs-variable language_">self</span>.registry.get(call.tool_name)<br>        <span class="hljs-keyword">except</span> ToolNotFoundError <span class="hljs-keyword">as</span> e:<br>            <span class="hljs-keyword">return</span> ToolObservation(<br>                call_id=call.call_id,<br>                tool_name=call.tool_name,<br>                ok=<span class="hljs-literal">False</span>,<br>                error=<span class="hljs-built_in">str</span>(e),<br>            )<br><br>        <span class="hljs-comment"># 2) arg validation</span><br>        <span class="hljs-keyword">try</span>:<br>            args = tool.validate(call.arguments)<br>        <span class="hljs-keyword">except</span> ValidationError <span class="hljs-keyword">as</span> e:<br>            <span class="hljs-keyword">return</span> ToolObservation(<br>                call_id=call.call_id,<br>                tool_name=call.tool_name,<br>                ok=<span class="hljs-literal">False</span>,<br>                error=<span class="hljs-string">f&quot;Argument validation failed: <span class="hljs-subst">&#123;e&#125;</span>&quot;</span>,<br>            )<br>        <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>            <span class="hljs-keyword">return</span> ToolObservation(<br>                call_id=call.call_id,<br>                tool_name=call.tool_name,<br>                ok=<span class="hljs-literal">False</span>,<br>                error=<span class="hljs-string">f&quot;Argument validation failed: <span class="hljs-subst">&#123;<span class="hljs-built_in">type</span>(e).__name__&#125;</span>: <span class="hljs-subst">&#123;e&#125;</span>&quot;</span>,<br>            )<br><br>        <span class="hljs-comment"># 3) execute with retry + backoff</span><br>        last_err: <span class="hljs-type">Optional</span>[<span class="hljs-built_in">str</span>] = <span class="hljs-literal">None</span><br>        attempts_meta = []<br><br>        <span class="hljs-keyword">for</span> attempt <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-variable language_">self</span>.config.max_attempts + <span class="hljs-number">1</span>):<br>            start = time.time()<br>            <span class="hljs-keyword">try</span>:<br>                <span class="hljs-comment"># 注意：我们 Day1 的 tool.run 是 sync 的</span><br>                <span class="hljs-comment"># timeout 的实现方式：让工具自己尊重 timeout（今天先用工具内部实现）</span><br>                result = tool.run(args)<br>                latency_ms = <span class="hljs-built_in">int</span>((time.time() - start) * <span class="hljs-number">1000</span>)<br><br>                <span class="hljs-keyword">return</span> ToolObservation(<br>                    call_id=call.call_id,<br>                    tool_name=call.tool_name,<br>                    ok=<span class="hljs-literal">True</span>,<br>                    result=result,<br>                    error=<span class="hljs-literal">None</span>,<br>                ).model_copy(update=&#123;<br>                    <span class="hljs-comment"># 把 trace 信息塞进 result meta（最小可观测）</span><br>                    <span class="hljs-string">&quot;result&quot;</span>: &#123;<br>                        <span class="hljs-string">&quot;data&quot;</span>: result,<br>                        <span class="hljs-string">&quot;trace&quot;</span>: &#123;<br>                            <span class="hljs-string">&quot;attempts&quot;</span>: attempt,<br>                            <span class="hljs-string">&quot;latency_ms&quot;</span>: latency_ms,<br>                            <span class="hljs-string">&quot;attempt_logs&quot;</span>: attempts_meta,<br>                        &#125;<br>                    &#125;<br>                &#125;)<br><br>            <span class="hljs-keyword">except</span> TimeoutError <span class="hljs-keyword">as</span> e:<br>                latency_ms = <span class="hljs-built_in">int</span>((time.time() - start) * <span class="hljs-number">1000</span>)<br>                last_err = <span class="hljs-string">f&quot;TimeoutError: <span class="hljs-subst">&#123;e&#125;</span>&quot;</span><br>                attempts_meta.append(&#123;<span class="hljs-string">&quot;attempt&quot;</span>: attempt, <span class="hljs-string">&quot;latency_ms&quot;</span>: latency_ms, <span class="hljs-string">&quot;error&quot;</span>: last_err&#125;)<br><br>            <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:<br>                latency_ms = <span class="hljs-built_in">int</span>((time.time() - start) * <span class="hljs-number">1000</span>)<br>                last_err = <span class="hljs-string">f&quot;<span class="hljs-subst">&#123;<span class="hljs-built_in">type</span>(e).__name__&#125;</span>: <span class="hljs-subst">&#123;e&#125;</span>&quot;</span><br>                attempts_meta.append(&#123;<span class="hljs-string">&quot;attempt&quot;</span>: attempt, <span class="hljs-string">&quot;latency_ms&quot;</span>: latency_ms, <span class="hljs-string">&quot;error&quot;</span>: last_err&#125;)<br><br>            <span class="hljs-comment"># backoff before retry (except after last attempt)</span><br>            <span class="hljs-keyword">if</span> attempt &lt; <span class="hljs-variable language_">self</span>.config.max_attempts:<br>                sleep_s = <span class="hljs-variable language_">self</span>.config.backoff_base_seconds * (<span class="hljs-number">2</span> ** (attempt - <span class="hljs-number">1</span>))<br>                time.sleep(sleep_s)<br><br>        <span class="hljs-keyword">return</span> ToolObservation(<br>            call_id=call.call_id,<br>            tool_name=call.tool_name,<br>            ok=<span class="hljs-literal">False</span>,<br>            result=&#123;<span class="hljs-string">&quot;trace&quot;</span>: &#123;<span class="hljs-string">&quot;attempts&quot;</span>: <span class="hljs-variable language_">self</span>.config.max_attempts, <span class="hljs-string">&quot;attempt_logs&quot;</span>: attempts_meta&#125;&#125;,<br>            error=<span class="hljs-string">f&quot;Failed after <span class="hljs-subst">&#123;self.config.max_attempts&#125;</span> attempts. Last error: <span class="hljs-subst">&#123;last_err&#125;</span>&quot;</span>,<br>        )<br></code></pre></td></tr></table></figure>
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/Knowledge/" class="category-chain-item">Knowledge</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/Knowledge/Agent/" class="category-chain-item">Agent</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/Knowledge/" class="print-no-link">#Knowledge</a>
+      
+        <a href="/tags/LLM/" class="print-no-link">#LLM</a>
+      
+        <a href="/tags/Data/" class="print-no-link">#Data</a>
+      
+        <a href="/tags/Agent/" class="print-no-link">#Agent</a>
+      
+        <a href="/tags/%E6%95%B0%E6%8D%AE%E4%BA%BA%E5%BF%AB%E9%80%9F%E5%AD%A6-AI/" class="print-no-link">#数据人快速学 AI</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>什么是大模型的工具调用框架？</div>
+      <div>https://norushcoder.com/2026/02/23/scheme-for-tool-calling-20260223/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>RichyLiu</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2026年2月23日</div>
+        </div>
+      
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a class="print-no-link" target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-cc-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2026/03/03/thinking-in-system-20260303/" title="《系统之美》聊聊如何建立系统性思维">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">《系统之美》聊聊如何建立系统性思维</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2026/02/06/The_Disadvantage_of_Text2Sql_in_DDL_20260206/" title="DDL">
+                        <span class="hidden-mobile">DDL</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+  
+  
+    <article id="comments" lazyload>
+      
+
+    </article>
+  
+
+
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="footer-content">
+       Richy <i class="iconfont icon-love"></i> Alyssa 
+    </div>
+  
+  
+    <div class="statistics">
+  
+  
+
+  
+    
+      <span id="leancloud-site-pv-container" style="display: none">
+        pv 
+        <span id="leancloud-site-pv"></span>
+         次
+      </span>
+    
+    
+      <span id="leancloud-site-uv-container" style="display: none">
+        uv 
+        <span id="leancloud-site-uv"></span>
+         人
+      </span>
+    
+    
+
+  
+
+</div>
+
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.4/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.20.1/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/5.0.0/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  <script defer src="/js/leancloud.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+</body>
+</html>

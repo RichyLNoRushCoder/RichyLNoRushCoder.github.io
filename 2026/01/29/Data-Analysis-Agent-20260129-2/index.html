@@ -21,13 +21,13 @@
   
     <meta name="description" content="首先做一个总结： 📊 常见向量索引算法与底层库对比表   类别 名称 核心原理 优势 (Pros) 劣势 (Cons) 适用场景    算法 IVF 聚类分区：利用 K-Means 将空间划分为小区，搜索时只扫描邻近区域。 内存占用低，索引速度快。 搜索精度受限于聚类边界。 中大规模数据的平衡选型。   算法 HNSW 分层图网络：构建多层“小世界”导航图，通过层级跳跃快速逼近目标。 性能巅峰，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="向量数据库常见的索引算法和检索算法">
+<meta property="og:title" content="向量数据库常见的索引算法">
 <meta property="og:url" content="https://norushcoder.com/2026/01/29/Data-Analysis-Agent-20260129-2/index.html">
 <meta property="og:site_name" content="NoRushCoder">
 <meta property="og:description" content="首先做一个总结： 📊 常见向量索引算法与底层库对比表   类别 名称 核心原理 优势 (Pros) 劣势 (Cons) 适用场景    算法 IVF 聚类分区：利用 K-Means 将空间划分为小区，搜索时只扫描邻近区域。 内存占用低，索引速度快。 搜索精度受限于聚类边界。 中大规模数据的平衡选型。   算法 HNSW 分层图网络：构建多层“小世界”导航图，通过层级跳跃快速逼近目标。 性能巅峰，">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-01-29T07:33:34.000Z">
-<meta property="article:modified_time" content="2026-01-29T09:36:24.279Z">
+<meta property="article:modified_time" content="2026-02-06T00:51:29.800Z">
 <meta property="article:author" content="RichyLiu">
 <meta property="article:tag" content="Agent">
 <meta property="article:tag" content="Data">
@@ -38,7 +38,7 @@
   
   
   
-  <title>向量数据库常见的索引算法和检索算法 - NoRushCoder</title>
+  <title>向量数据库常见的索引算法 - NoRushCoder</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -217,7 +217,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="向量数据库常见的索引算法和检索算法"></span>
+            <span id="subtitle" data-typed-text="向量数据库常见的索引算法"></span>
           
         </div>
 
@@ -240,7 +240,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          816 字
+          1.1k 字
         
       </span>
     
@@ -251,7 +251,7 @@
         
         
         
-          7 分钟
+          10 分钟
         
       </span>
     
@@ -297,7 +297,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">向量数据库常见的索引算法和检索算法</h1>
+            <h1 id="seo-header">向量数据库常见的索引算法</h1>
             
             
               <div class="markdown-body">
@@ -365,16 +365,17 @@
 </li>
 <li><p><strong>需要进行亿级数据的大规模训练与加速</strong> 🛠️：直接使用 <strong>FAISS</strong>。</p>
 </li>
-<li><p><strong>IVF（Inverted File Index）</strong><br>常见的数据库都支持 IVF 索引。<br>1.1 IVF 索引的存储结构<br>IVF 索引是一种基于倒排索引的数据结构，用于快速查找相似数据。主要有两部分组成，一个是质心表、一个是倒排列表。<br>码表里边存储的是每个聚类的质心向量，同时还会存储这个质心对应的聚类 ID。<br>质心表<br>存储内容：每个聚类的质心向量，和这个聚类其他向量所在倒排列表的地址。<br>存储顺序：根据 Kmeans 聚类的结果输出顺序<br>倒排列表<br>存储内容：质心向量所在聚类的其他向量的 ID 和向量的具体内容。<br>存储顺序：倒排列表内的顺序经常是根据插入顺序排序的。倒排列表之间的顺序通常是按照质心表的顺序<br>1.2 IVF 索引的检索过程<br>IVF 索引的检索过程可以分为以下几个步骤：</p>
+<li><p><strong>IVF（Inverted File Index）</strong><br>常见的数据库都支持 IVF 索引。<br>1.1 IVF 索引的检索过程<br>IVF 索引的检索过程可以分为以下几个步骤：</p>
 </li>
 <li><p>计算查询向量与所有质心向量的距离，找到距离最近的 K 个质心向量。</p>
 </li>
 <li><p>对于每个最近的质心向量，根据倒排列表找到所有属于该聚类的向量。</p>
 </li>
-<li><p>对这些向量进行距离计算，返回距离最近的 N 个向量。</p>
+<li><p>对这些向量进行距离计算，返回距离最近的 N 个向量。<br>1.2 IVF 索引的存储结构<br>IVF 索引是一种基于倒排索引的数据结构，用于快速查找相似数据。主要有两部分组成，一个是质心表、一个是倒排列表。<br>码表里边存储的是每个聚类的质心向量，同时还会存储这个质心对应的聚类 ID。<br>质心表<br>存储内容：每个聚类的质心向量，和这个聚类其他向量所在倒排列表的地址。<br>存储顺序：根据 Kmeans 聚类的结果输出顺序<br>倒排列表<br>存储内容：质心向量所在聚类的其他向量的 ID 和向量的具体内容。<br>存储顺序：倒排列表内的顺序经常是根据插入顺序排序的。倒排列表之间的顺序通常是按照质心表的顺序</p>
 </li>
 </ol>
-<p>2.<strong>HNSW (Hierarchical Navigable Small World)</strong><br>2.1 HNSW 索引的存储结构<br>待补充</p>
+<p>2.<strong>HNSW (Hierarchical Navigable Small World)</strong><br>2.1 HNSW 索引基础 NSW算法<br>简单的理解一下，NSW算法在建立过程中<br>首先我们将向量一个一个放入数据库中，第一个向量我们将它作为根节点，后续的向量放入的时候，我们去找它最近的k个向量，然后去链接它们。直到我们放完了所有的向量。<br>如果我们要查询一个向量，我们先在数据库里边随便找一个向量，然后计算它与查询向量的距离，找到距离最近的k个向量，然后我们再去查询这k个向量的邻居，直到我们找到那个她的领居都比他距离查询向量更远，那他就是最近的向量<br>2.2 HNSW 索引算法<br>HNSW索引算法是在NSW算法上加上分层的概念，最上边的层向量最少，最下边的层向量最多，query现在最上边的层去找，找到这一层中和query最接近的向量，然后以他为点，链接下一层，到下一层继续找。<br>2.3 HNSW 索引存储结构<br>存储过程：<br>查过程：</p>
+<p>Step0:</p>
 
                 
               </div>
@@ -435,7 +436,7 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>向量数据库常见的索引算法和检索算法</div>
+      <div>向量数据库常见的索引算法</div>
       <div>https://norushcoder.com/2026/01/29/Data-Analysis-Agent-20260129-2/</div>
     </div>
     <div class="license-meta">
